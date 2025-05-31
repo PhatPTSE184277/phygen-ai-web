@@ -23,7 +23,9 @@ function Header() {
             </li>
           </ul>
           <div>
-            <button className="nav__button">Sign in</button>
+            <Link to={"/login"}>
+              <button className="nav__button">Sign in</button>
+            </Link>
           </div>
         </div>
       </nav>

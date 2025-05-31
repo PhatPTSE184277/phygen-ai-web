@@ -1,31 +1,26 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-import "./home.scss";
-import Icon from "../../img/icon.png";
-import Icon1 from "../../img/icon1.png";
-import Icon2 from "../../img/icon2.png";
-import Icon3 from "../../img/icon3.png";
-import Icon4 from "../../img/icon4.png";
-import F1 from "../../img/f1.png";
-import F2 from "../../img/f2.png";
-import F3 from "../../img/f3.png";
-import Bg from "../../img/bg.png";
-import Left from "../../img/left.png";
-import Right from "../../img/right.png";
-import Exam from "../../img/Exam.png";
-import FB from "../../img/FB.png";
-import X from "../../img/X.png";
-import YT from "../../img/YT.png";
-import TT from "../../img/TT.png";
+import './home.scss';
+import Icon from '../../img/Icon.png';
+import Icon1 from '../../img/icon1.png';
+import Icon2 from '../../img/icon2.png';
+import Icon3 from '../../img/icon3.png';
+import Icon4 from '../../img/icon4.png';
+import F1 from '../../img/f1.png';
+import F2 from '../../img/f2.png';
+import F3 from '../../img/f3.png';
+import Bg from '../../img/bg.png';
+import Left from '../../img/left.png';
+import Right from '../../img/right.png';
+import Exam from '../../img/Exam.png';
 
-import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { Input, Rate } from "antd";
-import Header from "../../components/header";
+import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { Input, Rate } from 'antd';
 
 function HomePage() {
   const api = "https://683590cfcd78db2058c23218.mockapi.io/FB";
@@ -60,7 +55,6 @@ function HomePage() {
   }, []);
   return (
     <div>
-      <Header />
       <section className="home">
         <div className="banner" />
         <div className="banner__trsf" />
@@ -197,44 +191,6 @@ function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="footer">
-        <div className="footer__wrapper">
-          <div>
-            <h5>Support</h5>
-            <p>Help Center</p>
-            <p>Safety information</p>
-            <p>Cancellation options</p>
-          </div>
-
-          <div>
-            <h5>Company</h5>
-            <p>About us</p>
-            <p>Privacy policy</p>
-            <p>Community Blog</p>
-            <p>Terms of service</p>
-          </div>
-
-          <div>
-            <h5>Contact</h5>
-            <p>FAQ</p>
-            <p>Get in touch</p>
-            <p>Partnerships</p>
-          </div>
-
-          <div className="social">
-            <h5>Social</h5>
-            <img src={FB} alt="" />
-            <img src={X} alt="" />
-            <img src={TT} alt="" />
-            <img src={YT} alt="" />
-          </div>
-        </div>
-        <div className="border" />
-        <div className="footer__bottom">
-          <h6>© Copyright Acenda 2024</h6>
         </div>
       </section>
     </div>

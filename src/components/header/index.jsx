@@ -1,12 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./index.scss"; // Assuming you have a CSS file for styles
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./index.scss";
 
 function Header() {
+  const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleRefresh = () => {
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
-    <header className="header">
+    <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
       <nav className="header__nav">
-        <h3>EXAMIFY</h3>
+        <h3 onClick={handleRefresh}>EXAMIFY</h3>
         <div className="header__nav__items">
           <ul>
             <li className="nav__btn">

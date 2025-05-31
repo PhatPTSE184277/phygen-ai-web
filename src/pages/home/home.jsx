@@ -4,24 +4,24 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import Header from "../components/header";
+import Header from "../../components/header/index";
 import "./home.scss";
-import Icon from "../img/icon.png";
-import Icon1 from "../img/icon1.png";
-import Icon2 from "../img/icon2.png";
-import Icon3 from "../img/icon3.png";
-import Icon4 from "../img/icon4.png";
-import F1 from "../img/f1.png";
-import F2 from "../img/f2.png";
-import F3 from "../img/f3.png";
-import Bg from "../img/bg.png";
-import Left from "../img/left.png";
-import Right from "../img/right.png";
-import Exam from "../img/Exam.png";
-import FB from "../img/FB.png";
-import X from "../img/X.png";
-import YT from "../img/YT.png";
-import TT from "../img/TT.png";
+import Icon from "../../img/Icon.png";
+import Icon1 from "../../img/icon1.png";  
+import Icon2 from "../../img/icon2.png";
+import Icon3 from "../../img/icon3.png";
+import Icon4 from "../../img/icon4.png";
+import F1 from "../../img/f1.png";
+import F2 from "../../img/f2.png";
+import F3 from "../../img/f3.png";
+import Bg from "../../img/bg.png";
+import Left from "../../img/left.png";
+import Right from "../../img/right.png";
+import Exam from "../../img/Exam.png";
+import FB from "../../img/FB.png";
+import X from "../../img/X.png";
+import YT from "../../img/YT.png";
+import TT from "../../img/TT.png";
 
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
@@ -60,7 +60,7 @@ function HomePage() {
   }, []);
   return (
     <div>
-      <Header />
+      <Header className="header"/>
       <section className="home">
         <div className="banner" />
         <div className="banner__trsf" />

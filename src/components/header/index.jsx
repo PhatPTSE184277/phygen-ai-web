@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.scss';
 
 function Header() {
-
     const navigate = useNavigate();
     const location = useLocation();
     const [scrolled, setScrolled] = useState(false);
@@ -54,7 +53,9 @@ function Header() {
                         </li>
                     </ul>
                     <div>
-                        <button className='nav__button'>Sign in</button>
+                        <Link to='/login'>
+                            <button className='nav__button'>Sign in</button>
+                        </Link>
                     </div>
                 </div>
             </nav>

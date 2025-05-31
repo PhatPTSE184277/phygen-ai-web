@@ -4,7 +4,6 @@ import LoginHeader from "../../components/login_header/login_header";
 function Register() {
   return (
     <div>
-      <LoginHeader></LoginHeader>
     </div>
   );
 }

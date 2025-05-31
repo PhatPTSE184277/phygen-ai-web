@@ -1,5 +1,4 @@
 import React from "react";
-import LoginHeader from "../../components/login_header/login_header";
 import { Link } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import "./login.scss"; // Assuming you have a CSS file for styles
@@ -11,7 +10,6 @@ import GG from "../../img/GG.png";
 function Login() {
   return (
     <div className="login">
-      <LoginHeader />
       <div className="login__img">
         <img src={Bg} alt="" className="login__bg" />
         <img src={Item} alt="" className="login__item" />

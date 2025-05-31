@@ -1,7 +1,7 @@
 import HomePageLayout from "../layouts/HomePageLayout";
 import HomePage from "../pages/home/home";
 
-const homePageRoutes = [
+const HomePageRoutes = [
   {
     path: "/",
     element: <HomePageLayout />,
@@ -14,4 +14,4 @@ const homePageRoutes = [
   },
 ];
 
-export default homePageRoutes;
+export default HomePageRoutes;

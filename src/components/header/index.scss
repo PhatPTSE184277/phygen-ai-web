@@ -80,6 +80,8 @@
             color: #4461F2;
             background-color: #FFFFFF;
             border: none;
-        }
+        } button:hover {
+                background-color: #c7cefc; /* đậm hơn khi hover */
+            }
     }
 }

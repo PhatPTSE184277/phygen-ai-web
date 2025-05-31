@@ -3,7 +3,7 @@
     width: 100%;
 
     .banner {
-        background: url('../img/banner.jpg');
+        background: url('../../img/banner.jpg');
         height: 865px;
         width: 100%;
         background-size: cover;
@@ -184,13 +184,9 @@
     }
 }
 
-.second__section {
-    background: linear-gradient(
-            to bottom,
-            rgba(106, 106, 106, 0.8),
-            rgba(106, 106, 106, 0.8)
-        ),
-        url('../img/banner2.jpg');
+.second__section{
+    background: linear-gradient(to bottom, rgba(106, 106, 106, 0.8), rgba(106, 106, 106, 0.8)), url('../../img/banner2.jpg');
+
 
     height: 600px;
     background-size: 140%; /* hoặc 150%, tùy mức zoom bạn muốn */

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.scss';
 
 function Header() {
+
     const navigate = useNavigate();
     const location = useLocation();
     const [scrolled, setScrolled] = useState(false);

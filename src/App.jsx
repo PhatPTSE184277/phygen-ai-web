@@ -1,4 +1,10 @@
 import React from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
+
+function App() {
+ return <RouterProvider router={router} />;
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/home/home";
 import Login from "./pages/login/login";
@@ -20,6 +26,7 @@ function App() {
     },
   ]);
   return <RouterProvider router={router} />;
+
 }
 
 export default App;

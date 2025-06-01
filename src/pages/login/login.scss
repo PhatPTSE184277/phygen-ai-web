@@ -52,8 +52,23 @@
             height: 60px;
             font-size: 18px;
             align-items: center;
+
+            &:hover{
+                background: #EAF0F7;
+            }
+             &:focus{
+                background: #EAF0F7;
+                border: none;
+             }
+        }
+
+        :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus,
+        :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus-within {
+                background: #EAF0F7;    
         }
    
+   
+        
 
         .anticon svg{
             background: #EAF0F7;
@@ -105,7 +120,7 @@
     background: transparent;
     position: absolute;
     z-index: 0;
-    transform: translate(0%, -25%);
+    transform: translate(0%, -40%);
     pointer-events: none;
 
     }
@@ -113,7 +128,7 @@
         background: transparent;
         position: absolute;
         z-index: 0;
-        transform: translate(118%, 95%);
+        transform: translate(118%, 55%);
     }
 
     .login_button{

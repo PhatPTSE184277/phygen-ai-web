@@ -21,7 +21,6 @@ import Exam from '../../img/Exam.png';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { Input, Rate } from 'antd';
-import Header from '../../components/header';
 
 function HomePage() {
     const api = 'https://683590cfcd78db2058c23218.mockapi.io/FB';
@@ -56,7 +55,6 @@ function HomePage() {
     return (
         <>
             <div>
-                <Header className='header' />
                 <section className='home'>
                     <div className='banner' />
                     <div className='banner__trsf' />

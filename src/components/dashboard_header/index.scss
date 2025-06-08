@@ -3,12 +3,6 @@
     display: flex;
     align-items: center;
     height: 84px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
     &.header--scrolled {
         background-color: white;
@@ -27,19 +21,18 @@
         }
     }
 
-    .header__nav {
+    .dashboard_header__nav {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-between;      
         background-color: transparent;
-        margin-top: 60px;
+        margin: 0px 60px 0px 60px;
         width: 100%;
-        transition: margin-top 0.3s ease;
 
         h3 {
             font-size: 22px;
             font-weight: 700;
-            color: #4461F2;
+            color: #5932EA;
             margin-left: 60px;
             cursor: pointer;
         }
@@ -65,25 +58,43 @@
                 font-size: 17px;
             }
         }
-    }
+        .dashboard_header__nav__items {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-    .header__nav__items {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 559px;
+            .nav__button {
+                width: 120px;
+                height: 42px;
+                border-radius: 21px;
+                font-weight: 400;
+                font-size: 17px;
+                text-align: center;
+                color: #4461F2;
+                background-color: #FFFFFF;
+                border: none;
+                cursor: pointer;
+            }
 
-        .nav__button {
-            width: 120px;
-            height: 42px;
-            border-radius: 21px;
-            font-weight: 400;
-            font-size: 17px;
-            text-align: center;
-            color: #4461F2;
-            background-color: #FFFFFF;
-            border: none;
-            cursor: pointer;
+            .nav__items__user{
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                p{
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #5932EA;
+                    margin-right: 10px;
+                }
+                img{
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+            }
         }
     }
+
+   
 }

@@ -1,0 +1,15 @@
+.dashboard {
+    display: flex;
+    justify-content: space-evenly;
+    background:#f6f6f6 url("../../img/bgdashboard.png") no-repeat;
+    z-index: 0;
+
+    .dashboard__content{
+        padding: 40px;
+        margin-top: 140px;
+        border-radius: 40px;
+        width: 1000px;
+        background-color: rgba(255, 255, 255, 0.6);
+        z-index: 1;
+    }
+}

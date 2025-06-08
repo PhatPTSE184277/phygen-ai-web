@@ -9,13 +9,12 @@ import Bg from "../../img/bg3.png";
 
 function Register() {
   const navigate = useNavigate();
-  const api = "https://683590cfcd78db2058c23218.mockapi.io/user";
 
   const handleRegister = async (values) => {
     try {
       values.role = "CUSTOMER";
-      const response = await api.post("register", values);
-      console.log(response);
+      // const response = await api.post("register", values);
+      // console.log(response);
       navigate("/login");
     } catch (err) {
       console.error(err);

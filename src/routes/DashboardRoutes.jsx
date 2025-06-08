@@ -1,6 +1,7 @@
 import React from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import UserDashboard from "../pages/user/dashboard";
+import UserProfile from "../pages/user/profile";
 
 const DashboardRoutes = [
   {
@@ -10,6 +11,10 @@ const DashboardRoutes = [
       {
         path: "/dashboard",
         element: <UserDashboard />,
+      },
+      {
+        path: "/profile",
+        element: <UserProfile />,
       },
     ],
   },

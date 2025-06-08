@@ -1,0 +1,85 @@
+.user-header{
+    .user-header__poster{
+        img{
+            width: 1000px;
+            height: auto;
+            border-radius: 20px;
+        }
+    }
+    .user-header__info{
+        display: flex;
+        gap: 100px;
+
+        .user{
+            img{
+                width: 140px;
+                height: 140px;
+                border-radius: 20px;
+                border: 3px solid white
+            }
+            p{
+                font-family: poppins, sans-serif;
+                font-size: 14px;
+                font-weight: 500;
+                color: #5932EA;
+                text-align: center;
+                margin: 0;
+            }
+        }
+
+        .user-header__info__details{
+            h3{
+                font-family: poppins, sans-serif;
+                font-size: 24px;
+                font-weight: 600;
+                color: #292D32;
+                margin: 8px 0 5px 0px;
+            }
+            p{
+                margin: 0;
+                font-family: poppins, sans-serif;
+                font-size: 16px;
+                font-weight: 600;
+                color: #9197B3;
+            }
+        }
+        
+    }
+    
+}
+
+.profile-detail{
+    margin: 0px 50px;
+    display: flex;
+    flex-direction: column;
+    transform: translate(0px, -60px);
+    .profile-detail__info{
+        display: grid;
+        grid-template-columns: 1fr 1.5fr 0.1fr;
+        margin-top: 30px;
+
+        h4{
+            font-family: poppins, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #9197B3;
+            margin: 0;
+        }
+
+        h5{
+            font-family: poppins, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #000000;
+            margin: 0;
+        }
+
+        p{
+            font-family: poppins, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #5932EA;
+            margin: 0;
+        }
+    }
+}

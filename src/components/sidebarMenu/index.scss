@@ -19,6 +19,7 @@
         justify-content: center;
 
         .menu-item{
+            cursor: pointer;
             display: flex;
             align-items: center;
             height: 65px;
@@ -45,6 +46,7 @@
         flex-direction: column;
 
         .menu-item{
+            cursor: pointer;
             display: flex;
             align-items: center;
             height: 65px;

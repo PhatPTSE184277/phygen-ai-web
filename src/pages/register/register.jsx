@@ -1,7 +1,7 @@
 import React from "react";
 import FB from "../../img/FBook.png";
 import GG from "../../img/GG.png";
-import "./register.scss"; // Assuming you have a CSS file for styles
+import "./register.scss";
 import { Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Item from "../../img/picture2.png";

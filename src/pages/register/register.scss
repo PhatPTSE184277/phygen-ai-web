@@ -4,7 +4,6 @@
     height: auto;
     border-radius: 40px;
 
-
     .register__section{
         display: flex;
         justify-content: space-around;
@@ -34,44 +33,101 @@
             color: #C7C7C7;
             margin-bottom: 0;
             margin-top: 0;
-            
         }
 
         .register__section__header{
-
             width: 400px;
             background: transparent;
-            
         }
 
-        :where(.css-dev-only-do-not-override-5uvb3z)[class^="ant-input"], :where(.css-dev-only-do-not-override-5uvb3z)[class*=" ant-input"] {
-            background: #EAF0F7;
-            border: none;
-            width: 400px;
-            height: 60px;
-            font-size: 18px;
-            align-items: center;
-
-            &:hover{
-                background: #EAF0F7;
+        // Fix Ant Design input styles
+        .ant-form-item {
+            .ant-input,
+            .ant-input-affix-wrapper {
+                background: #EAF0F7 !important;
+                border: none !important;
+                width: 400px !important;
+                height: 60px !important;
+                font-size: 18px !important;
+                border-radius: 8px !important;
+                
+                &:hover,
+                &:focus,
+                &.ant-input-focused {
+                    background: #EAF0F7 !important;
+                    border: none !important;
+                    box-shadow: 0 0 0 2px rgba(68, 97, 242, 0.2) !important;
+                    outline: none !important;
+                }
             }
-             &:focus{
-                background: #EAF0F7;
-                border: none;
-             }
+            
+            .ant-input-password {
+                background: #EAF0F7 !important;
+                border: none !important;
+                
+                &:hover,
+                &:focus,
+                &.ant-input-affix-wrapper-focused {
+                    background: #EAF0F7 !important;
+                    border: none !important;
+                    box-shadow: 0 0 0 2px rgba(68, 97, 242, 0.2) !important;
+                    outline: none !important;
+                }
+                
+                .ant-input {
+                    background: transparent !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                    
+                    &:hover,
+                    &:focus {
+                        background: transparent !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        outline: none !important;
+                    }
+                }
+            }
+            
+            .ant-input-suffix {
+                background: transparent !important;
+                
+                .anticon {
+                    color: #666 !important;
+                }
+            }
         }
 
-        :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus,
-        :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus-within {
-                background: #EAF0F7;    
-        }
+        // Remove old conflicting styles
+        // :where(.css-dev-only-do-not-override-5uvb3z)[class^="ant-input"], 
+        // :where(.css-dev-only-do-not-override-5uvb3z)[class*=" ant-input"] {
+        //     background: #EAF0F7;
+        //     border: none;
+        //     width: 400px;
+        //     height: 60px;
+        //     font-size: 18px;
+        //     align-items: center;
+        //     &:hover{
+        //         background: #EAF0F7;
+        //     }
+        //      &:focus{
+        //         background: #EAF0F7;
+        //         border: none;
+        //      }
+        // }
+
+        // :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus,
+        // :where(.css-dev-only-do-not-override-5uvb3z).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus-within {
+        //         background: #EAF0F7;    
+        // }
    
-        .anticon svg{
-            background: #EAF0F7;
-        }
-        .ant-input-suffix{
-            background: #EAF0F7;
-        }
+        // .anticon svg{
+        //     background: #EAF0F7;
+        // }
+        // .ant-input-suffix{
+        //     background: #EAF0F7;
+        // }
 
         .submit{
             button{
@@ -90,7 +146,6 @@
                     border-radius: 10px;
                     background-color: #3b54d1;
                 }
-            
         }
 
         .register__footer{
@@ -113,13 +168,13 @@
     }
 
     .register__bg{
-    background: transparent;
-    position: absolute;
-    z-index: 0;
-    transform: translate(53%, -57%);
-    pointer-events: none;
-
+        background: transparent;
+        position: absolute;
+        z-index: 0;
+        transform: translate(53%, -57%);
+        pointer-events: none;
     }
+    
     .register__item{
         background: transparent;
         position: absolute;
@@ -138,7 +193,7 @@
             border: 1px solid #DDDFDD;
             border-radius: 10px;
         }
-     }
+    }
 }
 
 .submit {
@@ -196,7 +251,6 @@
     }
 }
 
-// Add ripple animation
 @keyframes ripple {
     to {
         transform: scale(4);

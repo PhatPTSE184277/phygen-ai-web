@@ -42,22 +42,63 @@
             background: transparent;
         }
 
-        :where(.css-dev-only-do-not-override-5uvb3z)[class^="ant-input"], :where(.css-dev-only-do-not-override-5uvb3z)[class*=" ant-input"] {
-            background: #EAF0F7;
-            border: none;
-            width: 400px;
-            height: 60px;
-            font-size: 18px;
-            align-items: center;
+         .ant-form-item {
+        .ant-input,
+        .ant-input-affix-wrapper {
+            background: #EAF0F7 !important;
+            border: none !important;
+            width: 400px !important;
+            height: 60px !important;
+            font-size: 18px !important;
+            border-radius: 8px !important;
+            
+            &:hover,
+            &:focus,
+            &.ant-input-focused {
+                background: #EAF0F7 !important;
+                border: none !important;
+                box-shadow: 0 0 0 2px rgba(68, 97, 242, 0.2) !important;
+                outline: none !important;
+            }
         }
-   
-
-        .anticon svg{
-            background: #EAF0F7;
+        
+        .ant-input-password {
+            background: #EAF0F7 !important;
+            border: none !important;
+            
+            &:hover,
+            &:focus,
+            &.ant-input-affix-wrapper-focused {
+                background: #EAF0F7 !important;
+                border: none !important;
+                box-shadow: 0 0 0 2px rgba(68, 97, 242, 0.2) !important;
+                outline: none !important;
+            }
+            
+            .ant-input {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                outline: none !important;
+                
+                &:hover,
+                &:focus {
+                    background: transparent !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+            }
         }
-        .ant-input-suffix{
-            background: #EAF0F7;
+        
+        .ant-input-suffix {
+            background: transparent !important;
+            
+            .anticon {
+                color: #666 !important;
+            }
         }
+    }
 
         .submit{
             button{

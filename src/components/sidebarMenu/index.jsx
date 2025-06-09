@@ -4,7 +4,7 @@ import I2 from "../../img/i2.png";
 import I3 from "../../img/i3.png";
 import I4 from "../../img/i4.png";
 import I5 from "../../img/i5.png";
-import I6 from "../../img/icon5.png";
+import I6 from "../../img/Icon5.png";
 import "./index.scss";
 import { Link } from "react-router-dom";
 

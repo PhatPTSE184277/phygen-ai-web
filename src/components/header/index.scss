@@ -16,9 +16,9 @@
 
         .header__nav {
             margin-top: 0;
-            
+
             h3 {
-                color: #4461F2;
+                color: #4461f2;
             }
 
             li a {
@@ -39,7 +39,7 @@
         h3 {
             font-size: 22px;
             font-weight: 700;
-            color: #4461F2;
+            color: #4461f2;
             margin-left: 60px;
             cursor: pointer;
         }
@@ -80,10 +80,15 @@
             font-weight: 400;
             font-size: 17px;
             text-align: center;
-            color: #4461F2;
-            background-color: #FFFFFF;
+            color: #4461f2;
+            background-color: #ffffff;
             border: none;
             cursor: pointer;
+
+            &:hover {
+                color: #ffff;
+                background-color: #4461f2;
+            }
         }
     }
 }

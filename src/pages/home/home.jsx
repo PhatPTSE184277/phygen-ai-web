@@ -5,11 +5,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import './home.scss';
-import Icon from '../../img/icon.png';
-import Icon1 from '../../img/icon1.png';
-import Icon2 from '../../img/icon2.png';
-import Icon3 from '../../img/icon3.png';
-import Icon4 from '../../img/icon4.png';
+import Icon from '../../img/Icon.png';
+import Icon1 from '../../img/Icon1.png';
+import Icon2 from '../../img/Icon2.png';
+import Icon3 from '../../img/Icon3.png';
+import Icon4 from '../../img/Icon4.png';
 import F1 from '../../img/f1.png';
 import F2 from '../../img/f2.png';
 import F3 from '../../img/f3.png';

@@ -126,3 +126,66 @@
         }
      }
 }
+
+.submit {
+    button {
+        width: 400px;
+        height: 52px;
+        font-family: Poppins, sans-serif;
+        font-size: 19px;
+        font-weight: 600;
+        border: none;
+        background-color: #4461F2;
+        color: #FFFFFF;
+        border-radius: 10px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+        
+        &:hover {
+            transform: translateY(-2px);
+        }
+        
+        &:active {
+            transform: translateY(0px);
+        }
+    }
+}
+
+.login_button {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+
+    button {
+        width: 117px;
+        height: 52px;
+        border: 1px solid #DDDFDD;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        background: white;
+        
+        &:hover {
+            border-color: #4461F2;
+            transform: translateY(-2px);
+        }
+        
+        img {
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+    }
+}
+
+// Add ripple animation
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}

@@ -59,6 +59,11 @@
             width: 112px;
             height: 42px;
             box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+
+            &:hover {
+                background-color: #4461F2;
+                color: #ffffff;
+            }
         }
 
     }

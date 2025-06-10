@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import FB from "../../img/FBook.png";
 import GG from "../../img/GG.png";
 import "./register.scss";
@@ -6,9 +6,35 @@ import { Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Item from "../../img/picture2.png";
 import Bg from "../../img/bg3.png";
+import { initRegisterAnimations, initRegisterHoverEffects } from './registerAnimation';
 
 function Register() {
   const navigate = useNavigate();
+
+  // Refs for animation
+  const registerRef = useRef(null);
+  const bgRef = useRef(null);
+  const itemRef = useRef(null);
+  const headerRef = useRef(null);
+  const formRef = useRef(null);
+  const buttonsRef = useRef(null);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    
+    const refs = { bgRef, itemRef, headerRef, formRef, buttonsRef };
+    
+    // Initialize animations
+    const tl = initRegisterAnimations(refs);
+    const cleanupHover = initRegisterHoverEffects(refs);
+
+    // Cleanup function
+    return () => {
+        tl.kill();
+        cleanupHover();
+        document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   const handleRegister = async (values) => {
     try {
@@ -22,14 +48,14 @@ function Register() {
   };
 
   return (
-    <div className="register">
+    <div className="register" ref={registerRef}>
       <div className="register__img">
-        <img className="register__bg" src={Bg} alt="" />
-        <img className="register__item" src={Item} alt="" />
+        <img className="register__bg" src={Bg} alt="" ref={bgRef} />
+        <img className="register__item" src={Item} alt="" ref={itemRef} />
       </div>
 
       <section className="register__section">
-        <div>
+        <div ref={formRef}>
           <Form
             labelCol={{
               span: 24,
@@ -94,7 +120,7 @@ function Register() {
               </div>
             </div>
 
-            <div className="register_button">
+            <div className="register_button" ref={buttonsRef}>
               <button>
                 <img src={GG} alt="" />
               </button>
@@ -105,7 +131,7 @@ function Register() {
           </Form>
         </div>
 
-        <div className="register__section__header">
+        <div className="register__section__header" ref={headerRef}>
           <h1>Register to create exams now.</h1>
           <p>
             Already have an account yet ? {""}

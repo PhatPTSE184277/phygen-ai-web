@@ -12,7 +12,7 @@ const Sidebar = ({ active, onMenuClick }) => {
   const menuItemsTop = [
     { icon: I1, label: "Dashboard", path: "/dashboard" },
     { icon: I3, label: "My Profile", path: "/profile" },
-    { icon: I2, label: "Membership" },
+    { icon: I2, label: "Membership", path: "/membership" },
   ];
 
   const menuItemsBottom = [

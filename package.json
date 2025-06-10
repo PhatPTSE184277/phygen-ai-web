@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
     "antd": "^5.25.3",
     "axios": "^1.9.0",
     "gsap": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
+    "recharts": "^2.15.3",
     "sass": "^1.89.0",
     "swiper": "^11.2.8"
   },

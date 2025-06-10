@@ -20,6 +20,8 @@ const Sidebar = ({ active, onMenuClick }) => {
     { icon: I5, label: "History" },
   ];
 
+  
+
   return (
     <div className="sidebar">
       <div className="top-menu">

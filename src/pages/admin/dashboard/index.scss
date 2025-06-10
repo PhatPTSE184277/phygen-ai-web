@@ -1,0 +1,28 @@
+.admin-dashboard{
+    h2{
+        font-family: Poppins , sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #343A40;
+    }
+    button{
+        width: 116px;
+        height: 34px;
+        background-color: #FFFFFF;
+        color: #343A40;
+        border: none;
+        border-radius: 10px;
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .chart{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+}

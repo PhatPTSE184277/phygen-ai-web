@@ -38,12 +38,11 @@ const data = [
 
 const BarChartComponent = () => {
   return (
-    <BarChart width={550} height={260} data={data} barSize={20}>
+    <BarChart width={450} height={260} data={data} barSize={20}>
       <CartesianGrid strokeDasharray="3 3" vertical={false} />
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Legend />
       <Bar dataKey="value" fill="#a48bff" shape={<RoundedBar />} name="Exam" />
     </BarChart>
   );

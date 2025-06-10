@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 
 const Sidebar = ({ active, onMenuClick }) => {
   const menuItemsTop = [
-    { icon: I1, label: "Dashboard" },
-    { icon: I3, label: "My Profile" },
-    { icon: I2, label: "Membership" },
+    { icon: I1, label: "Dashboard", path: "/dashboard" },
+    { icon: I3, label: "My Profile", path: "/profile" },
+    { icon: I2, label: "Membership", path: "/membership" },
   ];
 
   const menuItemsBottom = [
@@ -24,21 +24,23 @@ const Sidebar = ({ active, onMenuClick }) => {
     <div className="sidebar">
       <div className="top-menu">
         {menuItemsTop.map((item, idx) => (
-          <div
+          <Link
+            style={{ textDecoration: "none" }}
+            to={item.path}
             key={idx}
             className={`menu-item ${active === item.label ? "active" : ""}`}
             onClick={() => onMenuClick(item.label)}
           >
             <img src={item.icon} alt={item.label} className="icon-img" />
-
             <span className="label">{item.label}</span>
-          </div>
+          </Link>
         ))}
       </div>
 
       <div className="bottom-menu">
         {menuItemsBottom.map((item, idx) => (
-          <div
+          <Link
+            style={{ textDecoration: "none" }}
             key={idx}
             className="menu-item"
             onClick={() => onMenuClick(item.label)}
@@ -46,7 +48,7 @@ const Sidebar = ({ active, onMenuClick }) => {
             <img src={item.icon} alt={item.label} className="icon-img" />
 
             <span className="label">{item.label}</span>
-          </div>
+          </Link>
         ))}
 
         <div>

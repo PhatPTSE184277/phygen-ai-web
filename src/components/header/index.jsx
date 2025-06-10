@@ -46,7 +46,7 @@ function Header() {
               <Link to="/">About</Link>
             </li>
             <li>
-              <Link to="/">Blog</Link>
+              <Link to="/admin/dashboard">Blog</Link>
             </li>
             <li>
               <Link to="/dashboard">Contact</Link>

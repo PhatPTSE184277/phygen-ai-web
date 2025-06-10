@@ -1,28 +1,28 @@
 import React from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
-import UserDashboard from "../pages/user/dashboard";
 import UserProfile from "../pages/user/profile";
 import Membership from "../pages/user/member-ship";
+import AdminDashboard from "../pages/admin/dashboard";
 
-const DashboardRoutes = [
+const AdminRoutes = [
   {
-    path: "/",
+    path: "/admin",
     element: <DashboardLayout />,
     children: [
       {
-        path: "/dashboard",
-        element: <UserDashboard />,
+        path: "dashboard",
+        element: <AdminDashboard />,
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <UserProfile />,
       },
       {
-        path: "/membership",
+        path: "membership",
         element: <Membership />,
       },
     ],
   },
 ];
 
-export default DashboardRoutes;
+export default AdminRoutes;

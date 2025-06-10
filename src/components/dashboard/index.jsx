@@ -1,7 +1,5 @@
-import React from "react";
 import "./index.scss";
 import Sidebar from "../sidebarMenu";
-import { Outlet } from "react-router-dom";
 
 function Dashboard({ children }) {
   return (

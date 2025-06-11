@@ -3,6 +3,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import UserProfile from "../pages/user/profile";
 import Membership from "../pages/user/member-ship";
 import AdminDashboard from "../pages/admin/dashboard";
+import AccountManager from "../pages/admin/account-manager";
 
 const AdminRoutes = [
   {
@@ -14,8 +15,8 @@ const AdminRoutes = [
         element: <AdminDashboard />,
       },
       {
-        path: "profile",
-        element: <UserProfile />,
+        path: "account",
+        element: <AccountManager />,
       },
       {
         path: "membership",

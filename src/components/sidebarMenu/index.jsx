@@ -16,11 +16,9 @@ const Sidebar = ({ active, onMenuClick }) => {
   ];
 
   const menuItemsBottom = [
-    { icon: I4, label: "Generate" },
+    { icon: I4, label: "Generate", path: "/generate" },
     { icon: I5, label: "History" },
   ];
-
-  
 
   return (
     <div className="sidebar">
@@ -42,6 +40,7 @@ const Sidebar = ({ active, onMenuClick }) => {
       <div className="bottom-menu">
         {menuItemsBottom.map((item, idx) => (
           <Link
+            to={item.path}
             style={{ textDecoration: "none" }}
             key={idx}
             className="menu-item"

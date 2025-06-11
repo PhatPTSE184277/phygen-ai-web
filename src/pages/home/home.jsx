@@ -59,7 +59,7 @@ function HomePage() {
   }, []);
   return (
     <>
-      <div>
+      <div className="home__wrapper">
         <section className="home">
           <div className="banner" />
           <div className="banner__trsf" />
@@ -187,7 +187,13 @@ function HomePage() {
         <section className="membership">
           <div className="membership__wrapper__header">
             <h1>Customizable plans for everyone</h1>
-            <div style={{ border: "4px solid #5932EA",borderRadius:"10px" , width: "50px" }} />
+            <div
+              style={{
+                border: "4px solid #5932EA",
+                borderRadius: "10px",
+                width: "50px",
+              }}
+            />
             <div style={{ textAlign: "center" }}>
               <span>
                 With our scalable packages, you can pay for what you need and

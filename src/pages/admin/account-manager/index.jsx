@@ -1,7 +1,8 @@
 import React from "react";
-import { Table, Input, Button } from "antd";
+import { Table, Input } from "antd";
 import AdminDashboardComponent from "../../../components/admin/dashboard";
-import { SearchOutlined } from "@ant-design/icons";
+import { FilterFilled, SearchOutlined } from "@ant-design/icons";
+import "./index.scss";
 
 const AccountManager = () => {
   const columns = [
@@ -34,10 +35,6 @@ const AccountManager = () => {
       title: "Account",
       dataIndex: "account",
       key: "account",
-      filters: [
-        { text: "Premium", value: "Premium" },
-        { text: "Basic", value: "Basic" },
-      ],
     },
   ];
 
@@ -52,7 +49,17 @@ const AccountManager = () => {
 
   return (
     <AdminDashboardComponent>
-      <div style={{ padding: "2rem" }}>
+      <div className="account-manager">
+        <div className="account-manager__header">
+          <button>
+            <FilterFilled />
+          </button>
+          <Input
+            placeholder="Search"
+            prefix={<SearchOutlined />}
+            style={{ width: 320 }}
+          />
+        </div>
         <Table
           columns={columns}
           dataSource={data}

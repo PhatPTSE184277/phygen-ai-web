@@ -17,11 +17,15 @@ import Bg from "../../img/bg.png";
 import Left from "../../img/left.png";
 import Right from "../../img/right.png";
 import Exam from "../../img/Exam.png";
-import Check from "../../img/check.png";
+import Whitecheck from "../../img/whitecheck.png";
+import Blackcheck from "../../img/blackcheck.png";
+import Dot from "../../img/dot.png";
+import Wdot from "../../img/wdot.png";
 
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Input, Rate } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 function HomePage() {
   const api = "https://683590cfcd78db2058c23218.mockapi.io/FB";
@@ -181,72 +185,136 @@ function HomePage() {
         </section>
 
         <section className="membership">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              marginTop: "45px",
-            }}
-          >
-            <div className="basic-plan">
-              <div>
-                <h1>Basic Plan</h1>
-                <p>Ideal for new users or light usage</p>
-                <span>$0</span>
-              </div>
-              <div className="basic-plan__content">
-                <p>
-                  <img src={Check} alt="" /> Generate 5 AI-powered exams per
-                  month
-                </p>
-                <p>
-                  <img src={Check} alt="" />
-                  Limited question bank access
-                </p>
-                <p>
-                  {" "}
-                  <img src={Check} alt="" /> Store exams for 30 days
-                </p>
-                <p>
-                  <img src={Check} alt="" />
-                  No credit card required to get started
-                </p>
-              </div>
+          <div className="membership__wrapper__header">
+            <h1>Customizable plans for everyone</h1>
+            <div style={{ border: "4px solid #5932EA",borderRadius:"10px" , width: "50px" }} />
+            <div style={{ textAlign: "center" }}>
+              <span>
+                With our scalable packages, you can pay for what you need and
+                leave out what you don’t. We will grow with you.
+              </span>
+              <p>Figure out what package is best for you</p>
             </div>
+          </div>
 
-            <div className="basic-plan">
-              <div>
-                <h1>Premium</h1>
-                <p>Unlimited access for serious exam creators</p>
+          <div className="membership__wrapper">
+            <div className="membership__week">
+              <div className="membership__header">
+                <h4>Week</h4>
                 <span>
-                  $10<span style={{ fontSize: "16px" }}>/month</span>{" "}
+                  <span
+                    style={{
+                      color: "#b3b3b3",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    $
+                  </span>{" "}
+                  5
                 </span>
               </div>
-              <div className="basic-plan__content">
+              <div>
                 <p>
-                  <img src={Check} alt="" /> Unlimited AI-generated exams every
-                  month
+                  <img src={Blackcheck} alt="" />1 user 1 connected calendar
                 </p>
                 <p>
-                  <img src={Check} alt="" />
-                  Full question bank with updates
+                  <img src={Blackcheck} alt="" />
+                  Up to 12 responses
                 </p>
                 <p>
-                  {" "}
-                  <img src={Check} alt="" /> Custom difficulty & exam formats
+                  <img src={Blackcheck} alt="" />
+                  Up to 3 survey results archived
                 </p>
                 <p>
-                  <img src={Check} alt="" />
-                  Lifetime exam storage
-                </p>
-                <p>
-                  <img src={Check} alt="" />
-                  Smart auto-grading with feedback
+                  <img src={Blackcheck} alt="" />
+                  Knowledge base
                 </p>
               </div>
-              <div className="premium-plan__button">
-                <button>Choose This Plan</button>
+              <div>
+                <img src={Dot} alt="" />
               </div>
+              <button>Get Premium</button>
+            </div>
+
+            <div className="membership__month">
+              <div className="membership__header">
+                <h4>Month</h4>
+                <span>
+                  <span
+                    style={{
+                      color: "#b3b3b3",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    $
+                  </span>{" "}
+                  20
+                </span>
+              </div>
+              <div>
+                <p>
+                  <img src={Whitecheck} alt="" />1 user up to 2 connected
+                  calendars
+                </p>
+                <p>
+                  <img src={Whitecheck} alt="" />
+                  Up to 50 responses
+                </p>
+                <p>
+                  <img src={Whitecheck} alt="" />
+                  Up to 10 survey results archived
+                </p>
+                <p>
+                  <img src={Whitecheck} alt="" />
+                  Standard email & chat
+                </p>
+              </div>
+              <div>
+                <img src={Wdot} alt="" />
+              </div>
+              <button>Get Premium</button>
+            </div>
+
+            <div className="membership__year">
+              <div className="membership__header">
+                <h4>Year</h4>
+                <span>
+                  <span
+                    style={{
+                      color: "#b3b3b3",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    $
+                  </span>{" "}
+                  200
+                </span>
+              </div>
+              <div>
+                <p>
+                  <img src={Blackcheck} alt="" />
+                  Per user in company domain with single calender integrations
+                </p>
+                <p>
+                  <img src={Blackcheck} alt="" />
+                  Unlimited responses
+                </p>
+                <p>
+                  <img src={Blackcheck} alt="" />
+                  Unlimited survey results archived
+                </p>
+                <p>
+                  <img src={Blackcheck} alt="" />
+                  Priority email & chat
+                </p>
+              </div>
+              <div>
+                <img src={Dot} alt="" />
+              </div>
+              <button>Get Premium</button>
             </div>
           </div>
         </section>

@@ -3,6 +3,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import UserDashboard from "../pages/user/dashboard";
 import UserProfile from "../pages/user/profile";
 import Membership from "../pages/user/member-ship";
+import Generate from "../pages/user/generate";
 
 const DashboardRoutes = [
   {
@@ -20,6 +21,10 @@ const DashboardRoutes = [
       {
         path: "/membership",
         element: <Membership />,
+      },
+      {
+        path: "/generate",
+        element: <Generate />,
       },
     ],
   },

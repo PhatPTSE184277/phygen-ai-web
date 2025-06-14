@@ -18,7 +18,7 @@ const AdminSidebar = ({ active, onMenuClick }) => {
   ];
 
   return (
-    <div className="sidebar">
+    <div className="sidebar-menu-admin">
       <div className="menu">
         {menuItems.map((item, idx) => (
           <Link

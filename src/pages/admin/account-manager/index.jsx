@@ -57,7 +57,7 @@ const AccountManager = () => {
           <Input
             placeholder="Search"
             prefix={<SearchOutlined />}
-            style={{ width: 320 }}
+            style={{ width: 300 }}
           />
         </div>
         <Table

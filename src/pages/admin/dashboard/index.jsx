@@ -93,7 +93,7 @@ function AdminDashboard() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                margin: "20px 45px",
+                margin: "40px 45px",
               }}
             >
               <h2>Exams</h2>

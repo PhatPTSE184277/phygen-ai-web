@@ -54,7 +54,7 @@ function UserDashboard() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: "40px",
+                marginBottom: "20px",
               }}
             >
               <h2>Exams</h2>
@@ -73,7 +73,7 @@ function UserDashboard() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: "20px",
+                marginBottom: "0px",
               }}
             >
               <h2>Grade</h2>

@@ -12,7 +12,7 @@ function Membership() {
           <p>Pick the best option to start generating exams with AI.</p>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-around", marginTop: "45px" }}>
+        <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
           <div className="basic-plan">
             <div>
               <h1>Basic Plan</h1>

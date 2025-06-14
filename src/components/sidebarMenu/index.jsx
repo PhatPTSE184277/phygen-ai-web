@@ -21,7 +21,7 @@ const Sidebar = ({ active, onMenuClick }) => {
   ];
 
   return (
-    <div className="sidebar">
+    <div className="sidebar-menu">
       <div className="top-menu">
         {menuItemsTop.map((item, idx) => (
           <Link

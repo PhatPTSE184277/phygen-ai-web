@@ -10,11 +10,11 @@ const COLORS = ["#a48bff", "#f9a8d4", "#3b82f6"];
 
 const PieChartComponent = () => {
   return (
-    <PieChart width={300} height={250}>
+    <PieChart width={300} height={200}>
       <Pie
         data={data}
-        cx={150}
-        cy={120}
+        cx={140}
+        cy={80}
         innerRadius={60}
         outerRadius={80}
         fill="#8884d8"

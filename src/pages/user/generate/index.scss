@@ -1,13 +1,12 @@
 .generate{
-   
+       margin: 50px 60px;
     .generate__item{
         display: grid;
         grid-template-columns: repeat(4, 0.5fr);
-        margin-bottom: 60px;
-        margin-top: 40px;
+        margin-top: 30px;
     }
     h2{
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 400;
         font-family: Poppins, sans-serif;
         color: #1A1A1A;
@@ -31,7 +30,7 @@
         display: flex;
         justify-content: flex-end;
         padding-right: 50px;
-        margin-top: 150px;
+        margin-top: 60px;
         button{
             width: 230px;
             height: 66px;
@@ -42,7 +41,7 @@
             cursor: pointer;
             text-align: center;
             font-family: poppins, sans-serif;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             display: flex;
             align-items: center;

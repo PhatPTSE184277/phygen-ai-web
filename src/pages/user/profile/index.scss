@@ -1,9 +1,10 @@
 .user-header{
     .user-header__poster{
         img{
-            width: 1000px;
-            height: auto;
+            width: 1100px;
+            height: 160px;
             border-radius: 20px;
+            margin-top: 10px;
         }
     }
     .user-header__info{
@@ -12,8 +13,8 @@
 
         .user{
             img{
-                width: 140px;
-                height: 140px;
+                width: 110px;
+                height: 110px;
                 border-radius: 20px;
                 border: 3px solid white
             }
@@ -30,15 +31,14 @@
         .user-header__info__details{
             h3{
                 font-family: poppins, sans-serif;
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 600;
                 color: #292D32;
-                margin: 8px 0 5px 0px;
             }
             p{
                 margin: 0;
                 font-family: poppins, sans-serif;
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 600;
                 color: #9197B3;
             }
@@ -49,18 +49,17 @@
 }
 
 .profile-detail{
-    margin: 0px 50px;
+    margin: -60px 80px;
     display: flex;
     flex-direction: column;
-    transform: translate(0px, -60px);
     .profile-detail__info{
         display: grid;
         grid-template-columns: 1fr 1.5fr 0.1fr;
-        margin-top: 30px;
+        margin-top: 20px;
 
         h4{
             font-family: poppins, sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #9197B3;
             margin: 0;
@@ -68,7 +67,7 @@
 
         h5{
             font-family: poppins, sans-serif;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 400;
             color: #000000;
             margin: 0;
@@ -76,7 +75,7 @@
 
         p{
             font-family: poppins, sans-serif;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 400;
             color: #5932EA;
             margin: 0;

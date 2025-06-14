@@ -19,9 +19,9 @@ const data = [
 const RatingChart = () => {
   return (
     <BarChart
-      barSize={20}
+      barSize={15}
       width={500}
-      height={280}
+      height={200}
       data={data}
       layout="vertical"
       margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

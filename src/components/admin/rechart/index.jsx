@@ -20,7 +20,7 @@ const data = [
 
 const Rechart = () => {
   return (
-    <div style={{ width: "95%", height: 280 }}>
+    <div style={{ width: "90%", height: 200 }}>
       <ResponsiveContainer>
         <AreaChart
           data={data}

@@ -55,7 +55,7 @@ function AdminDashboard() {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  marginBottom: "40px",
+                  marginBottom: "20px",
                 }}
               >
                 <h2>Accounts</h2>
@@ -69,12 +69,12 @@ function AdminDashboard() {
               <BarChartComponent />
             </div>
 
-            <div className="pie-chart">
+            <div className="sebar-chart">
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  marginBottom: "20px",
+                  marginBottom: "0px",
                 }}
               >
                 <h2>Rating</h2>
@@ -93,8 +93,7 @@ function AdminDashboard() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: "40px",
-                marginTop: "20px",
+                margin: "40px 45px",
               }}
             >
               <h2>Exams</h2>
@@ -105,7 +104,9 @@ function AdminDashboard() {
                 </button>
               </Dropdown>
             </div>
-            <Rechart />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Rechart />
+            </div>
           </div>
         </div>
       </div>

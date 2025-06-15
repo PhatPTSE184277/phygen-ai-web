@@ -52,6 +52,7 @@
         .details__item{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            margin-top: 28px;
         }
     }
 }

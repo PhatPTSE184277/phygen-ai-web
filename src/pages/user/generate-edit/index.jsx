@@ -2,6 +2,7 @@ import React from "react";
 import Dashboard from "../../../components/dashboard";
 import { FormOutlined } from "@ant-design/icons";
 import "./index.scss";
+import { Link } from "react-router-dom";
 
 function GenerateEdit() {
   const questions = Array.from({ length: 15 }, (_, i) => ({
@@ -14,7 +15,9 @@ function GenerateEdit() {
       <div className="exam-container">
         <div className="exam-header">
           <h2>My exam for the adsa ahdiad</h2>
-          <button className="finish-button">Finish</button>
+          <Link to="/generate/summary">
+            <button className="finish-button">Finish</button>
+          </Link>
         </div>
 
         <div className="exam-body">

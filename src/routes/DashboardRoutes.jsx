@@ -7,6 +7,7 @@ import Generate from "../pages/user/generate";
 import History from "../pages/user/history";
 import HistoryGenerate from "../pages/user/history-generate";
 import GenerateEdit from "../pages/user/generate-edit";
+import GenerateSumary from "../pages/user/generate-sumary";
 
 const DashboardRoutes = [
   {
@@ -32,6 +33,10 @@ const DashboardRoutes = [
       {
         path: "/generate/edit",
         element: <GenerateEdit />,
+      },
+      {
+        path: "/generate/summary",
+        element: <GenerateSumary />,
       },
       {
         path: "/history",

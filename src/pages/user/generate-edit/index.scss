@@ -1,0 +1,47 @@
+.exam-container{
+    margin: 25px 10px 40px 30px;
+    .exam-header{
+        display: grid;
+        grid-template-columns: 6fr 1fr;
+        justify-items: center;
+        h2{
+            font-family: poppins, sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000;
+        }
+        button{
+            width: 140px;
+            height: 50px;
+            border-radius: 60px;
+            border: none;
+            background: rgba(89, 50, 234, 0.2);
+            color: #5932EA;
+            font-family: poppins, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #5932EA;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    .exam-body{
+        p{
+            font-family: poppins, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #000000;
+            margin-top: 15px;
+        }
+        .options{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            justify-items: center;
+            font-weight: 300;
+        }
+    }
+}

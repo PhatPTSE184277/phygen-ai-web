@@ -5,6 +5,7 @@ import { DownOutlined } from "@ant-design/icons";
 import "./index.scss";
 import TextArea from "antd/es/input/TextArea";
 import Star from "../../../img/star.png"; // Assuming you have a star icon in this path
+import { Link } from "react-router-dom";
 
 function Generate() {
   const items = [
@@ -110,12 +111,12 @@ function Generate() {
           </div>
         </div>
 
-        <div className="generate__button">
-          <button>
+        <Link to={"edit"} className="generate__button">
+          <button >
             <img src={Star} alt="" />
             Generate Exam
           </button>
-        </div>
+        </Link>
       </div>
     </Dashboard>
   );

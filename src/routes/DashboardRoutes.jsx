@@ -6,6 +6,7 @@ import Membership from "../pages/user/member-ship";
 import Generate from "../pages/user/generate";
 import History from "../pages/user/history";
 import HistoryGenerate from "../pages/user/history-generate";
+import GenerateEdit from "../pages/user/generate-edit";
 
 const DashboardRoutes = [
   {
@@ -27,6 +28,10 @@ const DashboardRoutes = [
       {
         path: "/generate",
         element: <Generate />,
+      },
+      {
+        path: "/generate/edit",
+        element: <GenerateEdit />,
       },
       {
         path: "/history",

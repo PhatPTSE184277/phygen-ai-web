@@ -1,10 +1,11 @@
 import React from "react";
-import { Table, Input } from "antd";
-import AdminDashboardComponent from "../../../components/admin/dashboard";
+import Dashboard from "../../../components/dashboard";
 import { FilterFilled, SearchOutlined } from "@ant-design/icons";
+import { Checkbox, Input, Table } from "antd";
 import "./index.scss";
+import { Link } from "react-router-dom";
 
-const AccountManager = () => {
+function History() {
   const columns = [
     {
       title: "#",
@@ -13,7 +14,7 @@ const AccountManager = () => {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: "Name",
+      title: "TITLE",
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
@@ -21,20 +22,30 @@ const AccountManager = () => {
         record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
-      title: "Create Date",
+      title: "CONTENT",
+      dataIndex: "createDate",
+      key: "createDate",
+    },
+    {
+      title: "CREATE DATE",
       dataIndex: "createDate",
       key: "createDate",
       sorter: (a, b) => new Date(a.createDate) - new Date(b.createDate),
     },
     {
-      title: "Exams",
-      dataIndex: "exams",
-      key: "exams",
-    },
-    {
-      title: "Account",
+      title: "CLASS",
       dataIndex: "account",
       key: "account",
+    },
+    {
+      title: "NUMBER",
+      dataIndex: "account",
+      key: "account",
+    },
+    {
+      title: "ANSWER",
+      key: "account",
+      render: () => <Checkbox />,
     },
   ];
 
@@ -46,19 +57,25 @@ const AccountManager = () => {
     exams: 40,
     account: "Premium",
   }));
-
   return (
-    <AdminDashboardComponent>
-      <div className="account-manager">
-        <div className="account-manager__header">
-          <button>
-            <FilterFilled />
-          </button>
-          <Input
-            placeholder="Search"
-            prefix={<SearchOutlined />}
-            style={{ width: 300 }}
-          />
+    <Dashboard>
+      <div className="user-history">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div className="user-history__header">
+            <button className="user-history__filter__button">
+              <FilterFilled />
+            </button>
+            <Input
+              placeholder="Search"
+              prefix={<SearchOutlined />}
+              style={{ width: 300 }}
+            />
+          </div>
+          <Link to="/history/generate">
+            <div className="user-history__generate__button">
+              <button>+ Generate Exam</button>
+            </div>
+          </Link>
         </div>
         <Table
           columns={columns}
@@ -71,8 +88,8 @@ const AccountManager = () => {
           }}
         />
       </div>
-    </AdminDashboardComponent>
+    </Dashboard>
   );
-};
+}
 
-export default AccountManager;
+export default History;

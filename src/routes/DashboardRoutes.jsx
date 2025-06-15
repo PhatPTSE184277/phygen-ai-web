@@ -4,6 +4,8 @@ import UserDashboard from "../pages/user/dashboard";
 import UserProfile from "../pages/user/profile";
 import Membership from "../pages/user/member-ship";
 import Generate from "../pages/user/generate";
+import History from "../pages/user/history";
+import HistoryGenerate from "../pages/user/history-generate";
 
 const DashboardRoutes = [
   {
@@ -25,6 +27,14 @@ const DashboardRoutes = [
       {
         path: "/generate",
         element: <Generate />,
+      },
+      {
+        path: "/history",
+        element: <History />,
+      },
+      {
+        path: "/history/generate",
+        element: <HistoryGenerate />,
       },
     ],
   },

@@ -1,0 +1,39 @@
+.user-history{
+    .user-history__header{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+
+
+        .user-history__filter__button {
+            width: 40px;
+            height: 32px;
+            background-color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+            cursor: pointer;
+            
+
+            &:hover {
+                background-color: #3651c2;
+            }
+        }
+    }
+    .user-history__generate__button{
+        button{
+            width: 200px;
+            height: 40px;
+            border-radius: 60px;
+            border: none;
+            background: rgba(89, 50, 234, 0.2);
+            color: #5932EA;
+            font-family: poppins, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
+}

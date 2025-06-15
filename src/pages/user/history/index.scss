@@ -1,4 +1,5 @@
 .user-history{
+    margin:   25px 10px 40px 30px;
     .user-history__header{
         display: flex;
         align-items: center;
@@ -18,7 +19,7 @@
             
 
             &:hover {
-                background-color: #3651c2;
+                background-color: rgba(89, 50, 234, 0.2);;
             }
         }
     }

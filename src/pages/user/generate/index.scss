@@ -31,6 +31,8 @@
         justify-content: flex-end;
         padding-right: 50px;
         margin-top: 60px;
+        text-decoration: none;
+        
         button{
             width: 230px;
             height: 66px;
@@ -47,6 +49,11 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+
+            &:hover {
+                background-color: #5932EA;
+                color: #FFFFFF;
+            }
         }
         
     }

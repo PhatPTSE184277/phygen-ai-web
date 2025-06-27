@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/features/userSlice";
 import "./index.scss";
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const user = useSelector((store) => store.user);
+  console.log(user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,9 +57,21 @@ function Header() {
               <Link to="/dashboard">Contact</Link>
             </li>
             <div>
-              <Link to="/login">
-                <button className="nav__button">Sign in</button>
-              </Link>
+              {user == null ? (
+                <Link to="/login">
+                  <button className="nav__button">Sign in</button>
+                </Link>
+              ) : (
+                <button
+                  className="nav__button"
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/login");
+                  }}
+                >
+                  Log out
+                </button>
+              )}
             </div>
           </ul>
         </div>

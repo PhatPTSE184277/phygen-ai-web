@@ -1,3 +1,4 @@
+
 import LoginPageLayout from "../layouts/LoginPageLayout";
 import Login from "../pages/login/login";
 import Register from "../pages/register/register";
@@ -9,11 +10,11 @@ const LoginPageRoutes = [
     children: [
       {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
       },
-       {
+      {
         path: "/register",
-        element: <Register/>
+        element: <Register />,
       },
     ],
   },

@@ -46,7 +46,7 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("accountId", username);
       if (role === "User") navigate("/dashboard");
-      if (role === "Admin") navigate("admin/dashboard");
+      if (role === "Admin") navigate("/admin/dashboard");
     } catch (err) {
       //   if (err.response?.status === 404) {
       //     console.log("Account not found!");

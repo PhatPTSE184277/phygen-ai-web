@@ -6,7 +6,11 @@ import { Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import Item from "../../img/picture2.png";
 import Bg from "../../img/bg3.png";
-import { initRegisterAnimations, initRegisterHoverEffects } from './registerAnimation';
+import {
+  initRegisterAnimations,
+  initRegisterHoverEffects,
+} from "./registerAnimation";
+import api from "../../config/axios";
 
 function Register() {
   const navigate = useNavigate();
@@ -20,30 +24,30 @@ function Register() {
   const buttonsRef = useRef(null);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    
+    document.body.style.overflow = "hidden";
+
     const refs = { bgRef, itemRef, headerRef, formRef, buttonsRef };
-    
+
     // Initialize animations
     const tl = initRegisterAnimations(refs);
     const cleanupHover = initRegisterHoverEffects(refs);
 
     // Cleanup function
     return () => {
-        tl.kill();
-        cleanupHover();
-        document.body.style.overflow = 'auto';
+      tl.kill();
+      cleanupHover();
+      document.body.style.overflow = "auto";
     };
   }, []);
 
   const handleRegister = async (values) => {
     try {
-      values.role = "CUSTOMER";
-      // const response = await api.post("register", values);
-      // console.log(response);
+      values.role = "User";
+      const response = await api.post("Auth/register", values);
+      console.log(response);
       navigate("/login");
     } catch (err) {
-      console.error(err);
+      console.log(err.response?.data);
     }
   };
 
@@ -63,10 +67,8 @@ function Register() {
             onFinish={handleRegister}
           >
             <Form.Item
-              name="username"
-              rules={[
-                { required: true, message: "Please input your user name!" },
-              ]}
+              name="email"
+              rules={[{ required: true, message: "Please input your Email!" }]}
             >
               <Input placeholder="Enter Email" />
             </Form.Item>

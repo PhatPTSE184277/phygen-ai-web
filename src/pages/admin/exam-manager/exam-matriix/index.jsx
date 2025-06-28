@@ -121,7 +121,11 @@ const ExamMatrix = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      sorter: (a, b) => a.status.localeCompare(b.status),
+      filters: [
+        { text: "active", value: "active" },
+        { text: "inactive", value: "inactive" },
+      ],
+      onFilter: (value, record) => (record.status ?? "") === value,
     },
 
     {

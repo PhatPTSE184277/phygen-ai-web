@@ -10,18 +10,15 @@ const examTypeEnum = {
   4: "End of Term 2",
 };
 
-const statusEnum = {
-  1: "Active",
-  2: "Inactive",
-};
-
 const CreateMatrixForm = ({ onCreated }) => {
   const [form] = Form.useForm();
   const [subjects, setSubjects] = useState([]);
 
   const handleFinish = async (values) => {
     try {
+      values.statusEnum = 1;
       const reponse = await api.post("exam_matrixs", values);
+
       console.log(reponse?.data?.data);
       message.success(reponse?.data?.message);
       onCreated?.();
@@ -70,20 +67,6 @@ const CreateMatrixForm = ({ onCreated }) => {
       >
         <Select placeholder="Choose exam type">
           {Object.entries(examTypeEnum).map(([value, label]) => (
-            <Option key={value} value={parseInt(value)}>
-              {label}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        name="statusEnum"
-        label="Status"
-        rules={[{ required: true, message: "Please choose status" }]}
-      >
-        <Select placeholder="Choose status">
-          {Object.entries(statusEnum).map(([value, label]) => (
             <Option key={value} value={parseInt(value)}>
               {label}
             </Option>

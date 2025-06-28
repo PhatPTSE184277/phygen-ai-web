@@ -73,6 +73,12 @@ const UpdateUserForm = ({ initialValues, onUpdated }) => {
           <Select.Option value={2}>Premium</Select.Option>
         </Select>
       </Form.Item>
+      <Form.Item name="role" label="Role">
+        <Select>
+          <Select.Option value={1}>User</Select.Option>
+          <Select.Option value={2}>Admin</Select.Option>
+        </Select>
+      </Form.Item>
 
       <Form.Item name="emailVerified" label="Verify Email">
         <Select>

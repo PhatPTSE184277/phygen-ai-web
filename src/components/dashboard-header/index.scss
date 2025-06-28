@@ -30,7 +30,7 @@
         width: 100%;
 
         h3 {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: #5932EA;
             margin-left: 60px;
@@ -47,15 +47,14 @@
         }
 
         li {
-            width: 120px;
+            width: 100px;
 
             a {
                 text-decoration: none;
-                font-size: 15px;
                 font-weight: 400;
                 text-align: center;
                 color: black;
-                font-size: 17px;
+                font-size: 12px;
             }
         }
         .dashboard_header__nav__items {
@@ -81,7 +80,7 @@
                 align-items: center;
                 gap: 15px;
                 p{
-                    font-size: 20px;
+                    font-size: 18px;
                     font-weight: 600;
                     color: #5932EA;
                     margin-right: 10px;

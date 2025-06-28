@@ -5,6 +5,8 @@ import AdminDashboard from "../pages/admin/dashboard";
 import AccountManager from "../pages/admin/account-manager";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import ExamMatrix from "../pages/admin/exam-manager/exam-matriix";
+import Subject from "../pages/admin/exam-manager/subject";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
@@ -36,6 +38,14 @@ const AdminRoutes = [
       {
         path: "membership",
         element: <Membership />,
+      },
+      {
+        path: "exammatrix",
+        element: <ExamMatrix />,
+      },
+      {
+        path: "subject",
+        element: <Subject />,
       },
     ],
   },

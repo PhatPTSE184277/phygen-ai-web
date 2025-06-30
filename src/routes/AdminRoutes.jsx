@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import ExamMatrix from "../pages/admin/exam-manager/exam-matriix";
 import Subject from "../pages/admin/exam-manager/subject";
+import MatrixDetail from "../pages/admin/exam-manager/matrix-detail";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
@@ -42,6 +43,10 @@ const AdminRoutes = [
       {
         path: "exammatrix",
         element: <ExamMatrix />,
+      },
+      {
+        path: "matrixdetail",
+        element: <MatrixDetail />,
       },
       {
         path: "subject",

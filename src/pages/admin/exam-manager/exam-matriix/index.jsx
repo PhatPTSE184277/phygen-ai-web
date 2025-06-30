@@ -96,8 +96,17 @@ const ExamMatrix = () => {
       dataIndex: "subjectName",
       key: "subjectName",
       filters: Array.isArray(subjects)
-        ? subjects.map((s) => ({ text: s.name, value: s.name }))
+        ? Array.from(new Set(subjects.map((s) => s.id)))
+            .map((id) => {
+              const subject = subjects.find((s) => s.id === id);
+              return {
+                text: subject?.name || "Unknown",
+                value: id,
+              };
+            })
+            .filter((item) => item.text !== "string")
         : [],
+      onFilter: (value, record) => record.subjectId === value,
     },
     {
       title: "Created By",

@@ -35,7 +35,7 @@ const CreateMatrixForm = ({ onCreated }) => {
 
   const fetchSubjects = async () => {
     try {
-      const res = await api.get("subjects");
+      const res = await api.get("subjects/active");
       console.log(res?.data?.data);
       setSubjects(res.data.data || []);
     } catch (error) {

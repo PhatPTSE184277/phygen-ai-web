@@ -7,7 +7,7 @@ const levelEnum = {
   2: "Medium",
   3: "Hard",
 };
-    
+
 const typeEnum = {
   1: "Multiple choice",
   2: "Essay question",
@@ -49,7 +49,7 @@ const UpdateMatrixDetailForm = ({ initialValues, onUpdated }) => {
   }, [initialValues, form]);
   const fetchSections = async () => {
     try {
-      const res = await api.get("matrix_sections");
+      const res = await api.get("matrix_sections/active");
       setSections(res.data.data || []);
     } catch (err) {
       console.log(err);
@@ -59,7 +59,7 @@ const UpdateMatrixDetailForm = ({ initialValues, onUpdated }) => {
 
   const fetchTopics = async () => {
     try {
-      const res = await api.get("topics");
+      const res = await api.get("topics/active");
       setTopics(res.data.data || []);
     } catch (err) {
       console.log(err);

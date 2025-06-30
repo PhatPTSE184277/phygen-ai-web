@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import ExamMatrix from "../pages/admin/exam-manager/exam-matriix";
 import Subject from "../pages/admin/exam-manager/subject";
 import MatrixDetail from "../pages/admin/exam-manager/matrix-detail";
+import MatrixSection from "../pages/admin/exam-manager/matrix-section";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
@@ -47,6 +48,10 @@ const AdminRoutes = [
       {
         path: "matrixdetail",
         element: <MatrixDetail />,
+      },
+      {
+        path: "matrixsectiion",
+        element: <MatrixSection />,
       },
       {
         path: "subject",

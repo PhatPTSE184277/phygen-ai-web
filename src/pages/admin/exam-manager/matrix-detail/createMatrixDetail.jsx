@@ -25,7 +25,7 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
 
   const fetchSections = async () => {
     try {
-      const res = await api.get("matrix_sections");
+      const res = await api.get("matrix_sections/active");
       setSections(res.data.data || []);
     } catch (err) {
       console.log(err);
@@ -35,7 +35,7 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
 
   const fetchTopics = async () => {
     try {
-      const res = await api.get("topics");
+      const res = await api.get("topics/active");
       setTopics(res.data.data || []);
     } catch (err) {
       console.log(err);

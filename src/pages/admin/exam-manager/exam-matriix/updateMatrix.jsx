@@ -46,7 +46,7 @@ const UpdateMatrixForm = ({ initialValues, onUpdated }) => {
 
   const fetchSubjects = async () => {
     try {
-      const res = await api.get("subjects");
+      const res = await api.get("subjects/active");
       setSubjects(res.data?.data || []);
     } catch (err) {
       console.error("Lỗi khi lấy subject", err);

@@ -13,6 +13,7 @@ const AdminSidebar = ({ active, onMenuClick }) => {
     { icon: I5, label: "Dashboard", path: "/admin/dashboard" },
     { icon: I1, label: "Account", path: "/admin/account" },
     { icon: I2, label: "Exam Matrix", path: "/admin/exammatrix" },
+    { icon: I2, label: "Matrix Detail", path: "/admin/matrixdetail" },
     { icon: I2, label: "Subject", path: "/admin/subject" },
     { icon: I2, label: "Feedback", path: "/admin/feedback" },
     { icon: I3, label: "Exam", path: "/exam" },

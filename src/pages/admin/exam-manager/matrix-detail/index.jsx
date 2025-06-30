@@ -4,11 +4,11 @@ import api from "../../../../config/axios";
 import ReuseTable from "../../../../components/admin/table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { message, Modal, Popconfirm } from "antd";
-import CreateSubjectForm from "./createSubject";
-import UpdateSubjectForm from "./updateSubject";
+import CreateMatrixDetailForm from "./createMatrixDetail";
+import UpdateMatrixDetailForm from "./updateMatrixDetail";
 
-function Subject() {
-  const [subject, setSubject] = useState([]);
+function MatrixDetail() {
+  const [matrixDetail, setMatrixDetail] = useState([]);
   const [loading, setLoading] = useState(false); // State to handle loading status
   const [pageSize, setPageSize] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,14 +16,14 @@ function Subject() {
   const [editingMatrix, setEditingMatrix] = useState(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
-  const fetchSubjects = async () => {
+  const fetchMatrixDetail = async () => {
     setLoading(true);
     try {
-      const response = await api.get("subjects", {
+      const response = await api.get("matrix_details", {
         params: { search: searchTerm },
       });
       console.log(response?.data?.data);
-      setSubject(response?.data?.data);
+      setMatrixDetail(response?.data?.data);
       setLoading(false);
     } catch (e) {
       console.log("Error", e);
@@ -31,14 +31,18 @@ function Subject() {
     }
   };
 
-  const filteredSubjects = subject.filter((s) => {
+  const filteredMatrixDetail = matrixDetail.filter((s) => {
     const keyword = searchTerm.toLowerCase();
-    return s.id?.toString().includes(keyword);
+    return (
+      s.topicName?.toLowerCase().includes(keyword) ||
+      s.sectionName?.toLowerCase().includes(keyword) ||
+      s.id?.toString().includes(keyword)
+    );
   });
 
   const onEditClick = async (record) => {
     try {
-      const res = await api.get(`subjects/${record.id}`);
+      const res = await api.get(`matrix_details/${record.id}`);
       const data = res?.data?.data;
       console.log(data);
       setEditingMatrix(data);
@@ -51,16 +55,16 @@ function Subject() {
 
   const handleDelete = async (id) => {
     try {
-      await api.patch(`subjects/${id}`);
+      await api.delete(`matrix_details/${id}`);
       message.success("Deleted successfully");
-      fetchSubjects();
+      fetchMatrixDetail();
     } catch (error) {
       console.error("Delete error:", error);
       message.error("Delete failed");
     }
   };
   useEffect(() => {
-    fetchSubjects();
+    fetchMatrixDetail();
   }, [searchTerm]);
 
   const columns = [
@@ -71,36 +75,54 @@ function Subject() {
       sorter: (a, b) => a.id - b.id,
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      filters: Array.isArray(subject)
-        ? Array.from(new Set(subject.map((s) => s.name))) 
+      title: "Section Name",
+      dataIndex: "sectionName",
+      key: "sectionName",
+      filters: Array.isArray(matrixDetail)
+        ? Array.from(new Set(matrixDetail.map((s) => s.sectionName)))
             .filter(Boolean)
             .map((name) => ({ text: name, value: name }))
         : [],
-      onFilter: (value, record) => record.name === value,
+      onFilter: (value, record) => record.sectionName === value,
     },
     {
-      title: "Grade",
-      dataIndex: "grade",
-      key: "grade",
-      filters: Array.isArray(subject)
-        ? Array.from(new Set(subject.map((s) => s.grade)))
+      title: "Topic Name",
+      dataIndex: "topicName",
+      key: "topicName",
+      filters: Array.isArray(matrixDetail)
+        ? Array.from(new Set(matrixDetail.map((s) => s.topicName)))
             .filter(Boolean)
             .map((name) => ({ text: name, value: name }))
         : [],
-      onFilter: (value, record) => record.grade === value,
+      onFilter: (value, record) => record.topicName === value,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      filters: [
-        { text: "Active", value: "Active" },
-        { text: "Inactive", value: "Inactive" },
-      ],
-      onFilter: (value, record) => (record.status ?? "") === value,
+      title: "Difficulty Level",
+      dataIndex: "difficultyLevel",
+      key: "difficultyLevel",
+      filters: Array.isArray(matrixDetail)
+        ? Array.from(new Set(matrixDetail.map((s) => s.difficultyLevel)))
+            .filter(Boolean)
+            .map((name) => ({ text: name, value: name }))
+        : [],
+      onFilter: (value, record) => record.difficultyLevel === value,
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      sorter: (a, b) => a.id - b.id,
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+      filters: Array.isArray(matrixDetail)
+        ? Array.from(new Set(matrixDetail.map((s) => s.type)))
+            .filter(Boolean)
+            .map((name) => ({ text: name, value: name }))
+        : [],
+      onFilter: (value, record) => record.type === value,
     },
 
     {
@@ -125,12 +147,14 @@ function Subject() {
     },
   ];
 
-  const data = filteredSubjects.map((s) => ({
+  const data = filteredMatrixDetail.map((s) => ({
     key: s.id,
     id: s.id,
-    name: s?.name,
-    grade: s?.grade,
-    status: s?.isDeleted ? "Inactive" : "Active",
+    sectionName: s?.sectionName,
+    topicName: s?.topicName,
+    difficultyLevel: s?.difficultyLevel,
+    quantity: s?.quantity,
+    type: s?.type,
   }));
   return (
     <AdminDashboardComponent>
@@ -145,9 +169,9 @@ function Subject() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         modalContent={({ onSuccess }) => (
-          <CreateSubjectForm
+          <CreateMatrixDetailForm
             onCreated={() => {
-              fetchSubjects(); // load lại danh sách
+              fetchMatrixDetail(); // load lại danh sách
               onSuccess(); // đóng modal
             }}
           />
@@ -158,10 +182,10 @@ function Subject() {
         onCancel={() => setIsEditModalVisible(false)}
         footer={null}
       >
-        <UpdateSubjectForm
+        <UpdateMatrixDetailForm
           initialValues={editingMatrix}
           onUpdated={() => {
-            fetchSubjects();
+            fetchMatrixDetail();
             setIsEditModalVisible(false);
           }}
         />
@@ -170,4 +194,4 @@ function Subject() {
   );
 }
 
-export default Subject;
+export default MatrixDetail;

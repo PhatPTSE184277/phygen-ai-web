@@ -28,6 +28,7 @@ const AdminSidebar = ({ active, onMenuClick }) => {
       ],
     },
     { icon: I2, label: "Subject", path: "/admin/subject" },
+    { icon: I2, label: "Topic", path: "/admin/topic" },
     { icon: I2, label: "Feedback", path: "/admin/feedback" },
     { icon: I4, label: "AI", path: "/AI" },
   ];

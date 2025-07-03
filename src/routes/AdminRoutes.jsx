@@ -14,7 +14,7 @@ import Topic from "../pages/admin/exam-manager/topic";
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
   console.log("User slice:", user);
-  if (user?.data?.account?.role === "Admin") {
+  if (user?.data?.account?.role === "admin") {
     return children;
   } else {
     return <Navigate to="/" />;

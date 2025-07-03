@@ -25,7 +25,6 @@ import Wdot from "../../img/wdot.png";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Input, Rate } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
 
 function HomePage() {
   const api = "https://683590cfcd78db2058c23218.mockapi.io/FB";

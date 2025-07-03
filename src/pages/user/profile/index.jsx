@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import Dashboard from "../../../components/dashboard";
 import "./index.scss";
 import Poster from "../../../img/bguser.png";
-import axios from "axios";
 import { useEffect } from "react";
 import Icon from "../../../img/local.png";
+import api from "../../../config/axios";
 
 function UserProfile() {
-  const api = "https://683590cfcd78db2058c23218.mockapi.io/user";
-
   const [user, setUser] = useState([]);
+  const fileInputRef = useRef(null);
 
   const fetchUser = async () => {
-    const reponse = await axios.get(api);
-    console.log(reponse.data);
-    setUser(reponse.data);
+    try {
+      const response = await api.get("AccountUser/me");
+      console.log(response?.data?.data);
+      setUser(response?.data?.data);
+    } catch (e) {
+      console.log("Error", e);
+    }
+  };
+  const handleUpdate = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await api.put("AccountUser/update-avatar", formData);
+      console.log(response.data.data);
+      fetchUser();
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
   };
 
   useEffect(() => {
@@ -29,15 +46,30 @@ function UserProfile() {
         </div>
         <div className="user-header__info">
           <div className="user" style={{ transform: "translate(60px, -70px)" }}>
-            <img src={user[0]?.avatar} alt="" />
-            <p>Change</p>
+            <img src={user?.avatarUrl} alt="" />
+            <p
+              style={{ cursor: "pointer" }}
+              onClick={() => fileInputRef.current.click()}
+            >
+              Change
+            </p>
+
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={(e) => {
+                handleUpdate(e.target.files[0]);
+              }}
+            />
           </div>
 
           <div className="user-header__info__details">
-            <h3>{user[0]?.name}</h3>
+            <h3>{user?.username}</h3>
             <div style={{ display: "flex", gap: "40px" }}>
               <div>
-                <p>{user[0]?.school}</p>
+                <p>{user?.school}</p>
               </div>
               <div>
                 <p
@@ -48,7 +80,7 @@ function UserProfile() {
                     src={Icon}
                     alt=""
                   />
-                  {user[0]?.address}
+                  {user?.address}
                 </p>
               </div>
             </div>
@@ -59,27 +91,27 @@ function UserProfile() {
       <section className="profile-detail">
         <div className="profile-detail__info">
           <h4>Personal ID</h4>
-          <p> {user[0]?.id}</p>
+          <h5> {user?.id}</h5>
         </div>
         <div style={{ border: "1px solid #d3d5df", marginTop: "10px" }} />
         <div className="profile-detail__info">
           <h4>User Name</h4>
-          <h5>{user[0]?.name}</h5>
+          <h5>{user?.username}</h5>
           <p>Edit</p>
         </div>
         <div className="profile-detail__info">
           <h4>Email</h4>
-          <h5>{user[0]?.email}</h5>
+          <h5>{user?.email}</h5>
           <p>Edit</p>{" "}
         </div>
         <div className="profile-detail__info">
           <h4>School</h4>
-          <h5>{user[0]?.school}</h5>
+          <h5>{user?.school}</h5>
           <p>Edit</p>{" "}
         </div>
         <div className="profile-detail__info">
           <h4>Address</h4>
-          <h5>{user[0]?.address}</h5>
+          <h5>{user?.address}</h5>
           <p>Edit</p>{" "}
         </div>
         <div className="profile-detail__info">

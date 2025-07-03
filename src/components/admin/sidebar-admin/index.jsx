@@ -6,11 +6,14 @@ import I4 from "../../../img/a4.png";
 import I5 from "../../../img/i1.png";
 import I6 from "../../../img/Icon5.png";
 import "./index.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/features/userSlice";
 
 const AdminSidebar = ({ active, onMenuClick }) => {
   const [openMenu, setOpenMenu] = useState(null);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toggleMenu = (label) => {
     setOpenMenu(openMenu === label ? null : label);
   };
@@ -29,7 +32,6 @@ const AdminSidebar = ({ active, onMenuClick }) => {
     },
     { icon: I2, label: "Subject", path: "/admin/subject" },
     { icon: I2, label: "Topic", path: "/admin/topic" },
-    { icon: I2, label: "Feedback", path: "/admin/feedback" },
     { icon: I4, label: "AI", path: "/AI" },
   ];
 
@@ -92,9 +94,16 @@ const AdminSidebar = ({ active, onMenuClick }) => {
           />
           <div className="logout">
             <img src={I6} alt="" />
-            <Link to={"/login"} style={{ textDecoration: "none" }}>
-              <span style={{ color: "#000" }}>Log Out</span>
-            </Link>
+            <span
+              className="nav__button"
+              onClick={() => {
+                dispatch(logout());
+                navigate("/login");
+              }}
+              style={{ color: "#000" }}
+            >
+              Log Out
+            </span>
           </div>
         </div>
       </div>

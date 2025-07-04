@@ -3,9 +3,10 @@ import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import api from "../../../../config/axios";
 import ReuseTable from "../../../../components/admin/table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { message, Modal, Popconfirm } from "antd";
+import { Modal, Popconfirm } from "antd";
 import CreateMatrixDetailForm from "./createMatrixDetail";
 import UpdateMatrixDetailForm from "./updateMatrixDetail";
+import { toast } from "react-toastify";
 
 function MatrixDetail() {
   const [matrixDetail, setMatrixDetail] = useState([]);
@@ -49,18 +50,18 @@ function MatrixDetail() {
       setIsEditModalVisible(true);
     } catch (error) {
       console.error("Failed to fetch user details:", error);
-      message.error("Cannot fetch matrix details");
+      toast.error("Invalid data. Cannot update.");
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await api.delete(`matrix_details/${id}`);
-      message.success("Deleted successfully");
+      toast.success("Deleted successfully.");
       fetchMatrixDetail();
     } catch (error) {
       console.error("Delete error:", error);
-      message.error("Delete failed");
+      toast.error("Oops! Could not delete the item.");
     }
   };
   useEffect(() => {

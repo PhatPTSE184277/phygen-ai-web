@@ -1,7 +1,8 @@
-import { Form, Input, Button, message, Select } from "antd";
+import { Form, Input, Button, Select } from "antd";
 // import api nếu bạn dùng axios instance
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const examTypeEnum = {
   1: "Midterm 1",
@@ -20,11 +21,11 @@ const CreateMatrixForm = ({ onCreated }) => {
       const reponse = await api.post("exam_matrixs", values);
 
       console.log(reponse?.data?.data);
-      message.success(reponse?.data?.message);
+      toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
     } catch (error) {
-      message.error("Failed to create Exam Matrix");
+      toast.error("Oops! There was a problem creating.");
       console.error(error);
     }
   };
@@ -40,7 +41,7 @@ const CreateMatrixForm = ({ onCreated }) => {
       setSubjects(res.data.data || []);
     } catch (error) {
       console.error("Lỗi khi lấy subject:", error);
-      message.error("Không thể tải danh sách môn học");
+      toast.error("Failed to load the list.");
     }
   };
 

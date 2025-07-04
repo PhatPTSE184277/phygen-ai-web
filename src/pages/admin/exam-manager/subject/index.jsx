@@ -3,9 +3,10 @@ import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import api from "../../../../config/axios";
 import ReuseTable from "../../../../components/admin/table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { message, Modal, Popconfirm } from "antd";
+import { Modal, Popconfirm } from "antd";
 import CreateSubjectForm from "./createSubject";
 import UpdateSubjectForm from "./updateSubject";
+import { toast } from "react-toastify";
 
 function Subject() {
   const [subject, setSubject] = useState([]);
@@ -48,18 +49,18 @@ function Subject() {
       setIsEditModalVisible(true);
     } catch (error) {
       console.error("Failed to fetch user details:", error);
-      message.error("Cannot fetch matrix details");
+      toast.error("Invalid data. Cannot update.");
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await api.patch(`subjects/${id}`);
-      message.success("Deleted successfully");
+      toast.success("Deleted successfully.");
       fetchSubjects();
     } catch (error) {
       console.error("Delete error:", error);
-      message.error("Delete failed");
+      toast.error("Oops! Could not delete the item.");
     }
   };
   useEffect(() => {

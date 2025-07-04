@@ -4,8 +4,9 @@ import api from "../../../config/axios";
 import ReuseTable from "../../../components/admin/table";
 import CreateUserForm from "./createUser";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal, Popconfirm, message } from "antd";
+import { Modal, Popconfirm } from "antd";
 import UpdateUserForm from "./updateUser";
+import { toast } from "react-toastify";
 
 const AccountManager = () => {
   const [user, setUser] = useState([]);
@@ -43,11 +44,13 @@ const AccountManager = () => {
   const handleDelete = async (id) => {
     try {
       await api.delete(`AccountAdmin/${id}`);
-      message.success("Deleted successfully");
+      toast.success("Deleted successfully.");
       fetchUsers();
     } catch (error) {
       console.error("Delete error:", error);
-      message.error("Delete failed");
+      const errorMessage = error.response?.data?.error[0];
+      console.error(errorMessage);
+      toast.error("Oops! Could not delete the item.");
     }
   };
 
@@ -67,7 +70,7 @@ const AccountManager = () => {
       setIsEditModalVisible(true); // mở modal
     } catch (error) {
       console.error("Failed to fetch user details:", error);
-      message.error("Không thể lấy thông tin user");
+      toast.error("Invalid data. Cannot update.");
     }
   };
   useEffect(() => {

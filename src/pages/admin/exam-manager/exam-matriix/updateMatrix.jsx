@@ -1,6 +1,7 @@
-import { Form, Button, message, Select } from "antd";
+import { Form, Button, Select } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
@@ -50,7 +51,7 @@ const UpdateMatrixForm = ({ initialValues, onUpdated }) => {
       setSubjects(res.data?.data || []);
     } catch (err) {
       console.error("Lỗi khi lấy subject", err);
-      message.error("Không thể tải danh sách môn học");
+      toast.error("Failed to load the list.");
     }
   };
 
@@ -62,11 +63,11 @@ const UpdateMatrixForm = ({ initialValues, onUpdated }) => {
         statusEnum: values.statusEnum,
       });
 
-      message.success("Cập nhật matrix thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (err) {
       console.error("Lỗi cập nhật matrix", err);
-      message.error("Cập nhật thất bại");
+      toast.error("Oops! There was a problem updating.");
     }
   };
 

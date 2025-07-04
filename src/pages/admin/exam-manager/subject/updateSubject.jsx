@@ -1,6 +1,7 @@
-import { Form, Input, Button, message, Select } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import { useEffect } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const gradeEnum = {
   1: "Grade 10",
@@ -38,11 +39,11 @@ const UpdateSubjectForm = ({ initialValues, onUpdated }) => {
         gradeEnum: values.gradeEnum,
       });
 
-      message.success("Cập nhật môn học thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (err) {
       console.error("Lỗi cập nhật môn học", err);
-      message.error("Cập nhật thất bại");
+      toast.error("Oops! There was a problem updating.");
     }
   };
   return (
@@ -79,7 +80,7 @@ const UpdateSubjectForm = ({ initialValues, onUpdated }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Create Subject
+          Update Subject
         </Button>
       </Form.Item>
     </Form>

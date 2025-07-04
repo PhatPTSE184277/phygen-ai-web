@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal, Popconfirm, message } from "antd";
+import { Modal, Popconfirm } from "antd";
 import api from "../../../../config/axios";
 import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import ReuseTable from "../../../../components/admin/table";
 import CreateMatrixForm from "./createMatrix";
 import UpdateMatrixForm from "./updateMatrix";
+import { toast } from "react-toastify";
 
 const ExamMatrix = () => {
   const [matrix, setMatrix] = useState([]);
@@ -59,11 +60,11 @@ const ExamMatrix = () => {
   const handleDelete = async (id) => {
     try {
       await api.patch(`exam_matrixs/${id}`);
-      message.success("Deleted successfully");
+      toast.success("Deleted successfully.");
       fetchMatrixs();
     } catch (error) {
       console.error("Delete error:", error);
-      message.error("Delete failed");
+      toast.error("Oops! Could not delete the item.");
     }
   };
 
@@ -76,7 +77,7 @@ const ExamMatrix = () => {
       setIsEditModalVisible(true);
     } catch (error) {
       console.error("Failed to fetch user details:", error);
-      message.error("Cannot fetch matrix details");
+      toast.error("Invalid data. Cannot update.");
     }
   };
   useEffect(() => {

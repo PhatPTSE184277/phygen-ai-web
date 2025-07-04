@@ -1,6 +1,7 @@
 import { Form, InputNumber, Button, message, Select } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const levelEnum = {
   1: "Easy",
@@ -53,7 +54,7 @@ const UpdateMatrixDetailForm = ({ initialValues, onUpdated }) => {
       setSections(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách section");
+      toast.error("Failed to load the list.");
     }
   };
 
@@ -70,11 +71,11 @@ const UpdateMatrixDetailForm = ({ initialValues, onUpdated }) => {
   const handleFinish = async (values) => {
     try {
       await api.put(`matrix_details/${initialValues.id}`, values);
-      message.success("Cập nhật Matrix Detail thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (err) {
       console.error(err);
-      message.error("Cập nhật thất bại");
+      toast.error("Oops! There was a problem updating!");
     }
   };
 

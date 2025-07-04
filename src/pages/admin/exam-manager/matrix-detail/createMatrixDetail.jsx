@@ -1,6 +1,7 @@
-import { Form, InputNumber, Button, message, Select } from "antd";
+import { Form, InputNumber, Button, Select } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const levelEnum = {
   1: "Easy",
@@ -29,7 +30,7 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
       setSections(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách section");
+      toast.error("Failed to load the list.");
     }
   };
 
@@ -39,19 +40,19 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
       setTopics(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách topic");
+      toast.error("Failed to load the list.");
     }
   };
 
   const handleFinish = async (values) => {
     try {
-      const res = await api.post("matrix_details", values);
-      message.success(res.data.message);
+      await api.post("matrix_details", values);
+      toast.success("Create successful!");
       form.resetFields();
       onCreated?.();
     } catch (err) {
       console.error(err);
-      message.error("Tạo mới thất bại");
+      toast.error("Oops! There was a problem creating.");
     }
   };
 

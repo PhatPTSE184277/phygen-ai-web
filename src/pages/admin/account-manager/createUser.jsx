@@ -1,5 +1,6 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 import api from "../../../config/axios"; // import api nếu bạn dùng axios instance
+import { toast } from "react-toastify";
 
 const CreateUserForm = ({ onCreated }) => {
   const [form] = Form.useForm();
@@ -8,11 +9,11 @@ const CreateUserForm = ({ onCreated }) => {
     try {
       values.accountType = 1;
       await api.post("AccountAdmin", values);
-      message.success("Tạo user thành công");
+      toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
     } catch (error) {
-      message.error("Tạo user thất bại");
+      toast.error("Oops! There was a problem creating.");
       console.error(error);
     }
   };

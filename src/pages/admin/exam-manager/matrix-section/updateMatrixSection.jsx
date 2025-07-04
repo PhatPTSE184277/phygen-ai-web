@@ -1,6 +1,7 @@
-import { Form, InputNumber, Button, message, Select, Input } from "antd";
+import { Form, InputNumber, Button, Select, Input } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const UpdateMatrixSectionForm = ({ initialValues, onUpdated }) => {
   const [form] = Form.useForm();
@@ -12,7 +13,7 @@ const UpdateMatrixSectionForm = ({ initialValues, onUpdated }) => {
       setExamMatrix(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách topic");
+      toast.error("Failed to load the list.");
     }
   };
   useEffect(() => {
@@ -32,11 +33,11 @@ const UpdateMatrixSectionForm = ({ initialValues, onUpdated }) => {
   const handleFinish = async (values) => {
     try {
       await api.put(`matrix_sections/${initialValues.id}`, values);
-      message.success("Cập nhật Matrix Detail thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (err) {
       console.error(err);
-      message.error("Cập nhật thất bại");
+      toast.error("Oops! There was a problem updating.");
     }
   };
 
@@ -78,7 +79,7 @@ const UpdateMatrixSectionForm = ({ initialValues, onUpdated }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Update Exam Matrix Detail
+          Update Exam Matrix Section
         </Button>
       </Form.Item>
     </Form>

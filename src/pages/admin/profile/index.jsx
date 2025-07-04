@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Icon from "../../../img/local.png";
 import api from "../../../config/axios";
 import AdminDashboardComponent from "../../../components/admin/dashboard";
+import { toast } from "react-toastify";
 
 function AdminProfile() {
   const [user, setUser] = useState([]);
@@ -27,9 +28,11 @@ function AdminProfile() {
     try {
       const response = await api.put("AccountUser/update-avatar", formData);
       console.log(response.data.data);
+      toast.success("Profile updated successfully.");
       fetchUser();
     } catch (error) {
       console.error("Upload error:", error);
+      toast.error("Oops! There was a problem updating.");
     }
   };
 

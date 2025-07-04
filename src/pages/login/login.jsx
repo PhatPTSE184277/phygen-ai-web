@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import "./login.scss";
@@ -10,8 +10,11 @@ import { initLoginAnimations, initHoverEffects } from "./loginAnimation";
 import api from "../../config/axios";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/features/userSlice";
+import { toast } from "react-toastify";
+import { FaCircleNotch } from "react-icons/fa";
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loginRef = useRef(null);
@@ -37,23 +40,34 @@ function Login() {
   }, []);
 
   const handleLogin = async (values) => {
+    setLoading(true);
     try {
       const response = await api.post("Auth/login", values);
-      console.log(response);
-      dispatch(login(response.data));
-      const token = response.data.data.token;
-      const { username, role } = response.data.data.account;
-      localStorage.setItem("token", token);
-      localStorage.setItem("accountId", username);
-      if (role === "user") navigate("/dashboard");
-      if (role === "admin") navigate("/admin/dashboard");
+
+      if (response?.data?.success) {
+        const { token, account } = response.data.data;
+        const { username, role } = account;
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("accountId", username);
+
+        dispatch(login(response.data));
+        toast.success(response.data.message);
+
+        if (role === "user") {
+          navigate("/dashboard");
+        } else if (role === "admin") {
+          navigate("/admin/dashboard");
+        }
+      }
     } catch (err) {
-      //   if (err.response?.status === 404) {
-      //     console.log("Account not found!");
-      //   } else {
-      //     console.log("Wrong username or password!");
-      //   }
-      console.log(err.response?.data);
+      console.log(err)
+      const errorMessage =
+        err.response?.data?.error[0];
+      console.error(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,7 +94,11 @@ function Login() {
           </p>
         </div>
         <div ref={formRef}>
-          <Form labelCol={{ span: 24 }} onFinish={handleLogin}>
+          <Form
+            labelCol={{ span: 24 }}
+            onFinish={handleLogin}
+            disabled={loading}
+          >
             <Form.Item
               name="identifier"
               rules={[
@@ -90,7 +108,7 @@ function Login() {
                 },
               ]}
             >
-              <Input placeholder="Enter Email" />
+              <Input placeholder="Enter Email" disabled={loading} />
             </Form.Item>
 
             <Form.Item
@@ -102,15 +120,25 @@ function Login() {
                 },
               ]}
             >
-              <Input.Password placeholder="••••••••" />
+              <Input.Password placeholder="••••••••" disabled={loading} />
             </Form.Item>
 
             <div className="login__footer">
               <h5 style={{ textAlign: "end" }}>Recover Password ?</h5>
 
               <div className="submit">
-                <button className="submit__btn" htmlType="submit">
-                  Sign In
+                <button
+                  className="submit__btn"
+                  htmlType="submit"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="spinner">
+                      <FaCircleNotch className="spinner-icon" />
+                    </span>
+                  ) : (
+                    "Sign In"
+                  )}
                 </button>
               </div>
 

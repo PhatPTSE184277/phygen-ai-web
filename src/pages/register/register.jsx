@@ -47,12 +47,11 @@ function Register() {
       const response = await api.post("Auth/register", values);
 
       if (response?.data?.success) {
-        toast.success(response.data.message);
+        toast.success("Registration successful. Please log in.");
         navigate("/login");
       }
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.error[0];
+      const errorMessage = err.response?.data?.error[0];
       console.error(errorMessage);
       toast.error(errorMessage);
     } finally {

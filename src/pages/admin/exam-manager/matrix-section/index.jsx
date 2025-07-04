@@ -74,18 +74,7 @@ function MatrixSection() {
       key: "id",
       sorter: (a, b) => a.id - b.id,
     },
-    {
-      title: "Matrix Id",
-      dataIndex: "matrixId",
-      key: "matrixId",
-      sorter: (a, b) => a.id - b.id,
-      filters: Array.isArray(matrixDetail)
-        ? Array.from(new Set(matrixDetail.map((s) => s.matrixId)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.matrixId === value,
-    },
+
     {
       title: "Section Name",
       dataIndex: "sectionName",
@@ -96,6 +85,12 @@ function MatrixSection() {
             .map((name) => ({ text: name, value: name }))
         : [],
       onFilter: (value, record) => record.sectionName === value,
+    },
+    {
+      title: "ExamMatrix ID",
+      dataIndex: "matrixId",
+      key: "matrixId",
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Display Order",

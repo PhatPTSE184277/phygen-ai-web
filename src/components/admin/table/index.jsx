@@ -32,7 +32,7 @@ function ReuseTable({
           <FolderAddOutlined style={{ fontSize: 20 }} />
         </button>
         <Input
-          placeholder="Search"
+          placeholder="Enter ID or Name..."
           prefix={<SearchOutlined />}
           style={{ width: 300 }}
           value={searchTerm}

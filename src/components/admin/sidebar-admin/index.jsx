@@ -9,6 +9,7 @@ import "./index.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/features/userSlice";
+import { BookOutlined, HddOutlined } from "@ant-design/icons";
 
 const AdminSidebar = ({ active, onMenuClick }) => {
   const [openMenu, setOpenMenu] = useState(null);
@@ -30,9 +31,20 @@ const AdminSidebar = ({ active, onMenuClick }) => {
         { label: "Matrix Section", path: "/admin/matrixsectiion" },
       ],
     },
-    { icon: I2, label: "Subject", path: "/admin/subject" },
-    { icon: I2, label: "Topic", path: "/admin/topic" },
-    { icon: I4, label: "AI", path: "/AI" },
+    {
+      icon: <BookOutlined style={{ fontSize: 24, height: 26 }} />,
+      label: "Subject",
+      path: "/admin/subject",
+    },
+    {
+      icon: (
+        <HddOutlined style={{ fontSize: 24, height: 26, lineHeight: "26px" }} />
+      ),
+      label: "Topic",
+      path: "/admin/topic",
+    },
+    // { icon: I4, label: "AI", path: "/AI" },
+    { icon: I3, label: "My Profile", path: "/admin/profile" },
   ];
 
   return (
@@ -78,7 +90,13 @@ const AdminSidebar = ({ active, onMenuClick }) => {
               className={`menu-item ${active === item.label ? "active" : ""}`}
               onClick={() => onMenuClick(item.label)}
             >
-              <img src={item.icon} alt={item.label} className="icon-img" />
+              <span className="icon-img">
+                {typeof item.icon === "string" ? (
+                  <img src={item.icon} alt={item.label} />
+                ) : (
+                  item.icon
+                )}
+              </span>
               <span className="label">{item.label}</span>
             </Link>
           )

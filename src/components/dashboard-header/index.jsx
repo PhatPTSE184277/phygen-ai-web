@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./index.scss";
-import axios from "axios";
+import { useSelector } from "react-redux";
 
 function DashboardHeader() {
-  const api = "https://683590cfcd78db2058c23218.mockapi.io/user";
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useSelector((store) => store.user);
   const [scrolled, setScrolled] = useState(false);
 
-  const [user, setUser] = useState([]);
-
-  const fetchUser = async () => {
-    const reponse = await axios.get(api);
-    console.log(reponse.data);
-    setUser(reponse.data);
-  };
-
   useEffect(() => {
-    fetchUser();
     const handleScroll = () => {
       if (window.scrollY > 80) {
         setScrolled(true);
@@ -64,11 +55,11 @@ function DashboardHeader() {
             </li>
             <div className="nav__items__user">
               <p>
-                {user[0]
-                  ? `Hello ${user[0].name.split(" ").slice(-1)[0]}, 👋🏼`
+                {user
+                  ? `Hello ${user?.data?.account?.username}, 👋🏼`
                   : "Hello 👋🏼"}
               </p>
-              <img src={user[0]?.avatar} alt="" />
+              <img src={user?.avatar} alt="" />
             </div>
           </ul>
         </div>

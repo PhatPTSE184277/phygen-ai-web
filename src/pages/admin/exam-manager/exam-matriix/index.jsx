@@ -95,14 +95,22 @@ const ExamMatrix = () => {
       title: "Subject Name",
       dataIndex: "subjectName",
       key: "subjectName",
-      filters: Array.isArray(subjects)
-        ? Array.from(new Set(subjects.map((s) => s.name)))
-            .filter((name) => typeof name === "string")
-            .map((name) => ({
+      filters:
+        Array.isArray(matrix) && Array.isArray(subjects)
+          ? Array.from(
+              new Set(
+                matrix
+                  .map((m) => {
+                    const subject = subjects.find((s) => s.id === m.subjectId);
+                    return subject?.name;
+                  })
+                  .filter(Boolean)
+              )
+            ).map((name) => ({
               text: name,
               value: name,
             }))
-        : [],
+          : [],
       onFilter: (value, record) => record.subjectName === value,
     },
     {
@@ -115,13 +123,13 @@ const ExamMatrix = () => {
       title: "Exam type",
       dataIndex: "examtype",
       key: "examtype",
-      filters: [
-        { text: "Midterm_1", value: "Midterm_1" },
-        { text: "End_of_term_1", value: "End_of_term_1" },
-        { text: "Midterm_2", value: "Midterm_2" },
-        { text: "End_of_term_2", value: "End_of_term_2" },
-      ],
-      onFilter: (value, record) => (record.examtype || "").includes(value),
+      filters: Array.from(new Set(matrix.map((item) => item.examtype)))
+        .filter(Boolean)
+        .map((type) => ({
+          text: type,
+          value: type,
+        })),
+      onFilter: (value, record) => record.examtype === value,
     },
     {
       title: "Status",

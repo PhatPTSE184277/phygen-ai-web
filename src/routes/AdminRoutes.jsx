@@ -10,6 +10,7 @@ import Subject from "../pages/admin/exam-manager/subject";
 import MatrixDetail from "../pages/admin/exam-manager/matrix-detail";
 import MatrixSection from "../pages/admin/exam-manager/matrix-section";
 import Topic from "../pages/admin/exam-manager/topic";
+import AdminProfile from "../pages/admin/profile";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
@@ -61,6 +62,10 @@ const AdminRoutes = [
       {
         path: "topic",
         element: <Topic />,
+      },
+      {
+        path: "profile",
+        element:<AdminProfile />,
       },
     ],
   },

@@ -77,12 +77,9 @@ function Topic() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      filters: Array.isArray(topics)
-        ? Array.from(new Set(topics.map((s) => s.name)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.name === value,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Level",

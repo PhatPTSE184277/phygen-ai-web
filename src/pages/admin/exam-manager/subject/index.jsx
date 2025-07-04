@@ -33,7 +33,10 @@ function Subject() {
 
   const filteredSubjects = subject.filter((s) => {
     const keyword = searchTerm.toLowerCase();
-    return s.id?.toString().includes(keyword);
+    return (
+      s.name?.toLowerCase().includes(keyword) ||
+      s.id?.toString().includes(keyword)
+    );
   });
 
   const onEditClick = async (record) => {
@@ -74,12 +77,9 @@ function Subject() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      filters: Array.isArray(subject)
-        ? Array.from(new Set(subject.map((s) => s.name))) 
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.name === value,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Grade",

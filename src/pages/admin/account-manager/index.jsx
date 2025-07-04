@@ -98,23 +98,33 @@ const AccountManager = () => {
       title: "EmailVerified",
       dataIndex: "emailStatus",
       key: "emailStatus",
-      sorter: (a, b) => a.emailStatus.localeCompare(b.emailStatus),
+      filters: [
+        { text: "Verified", value: "Verified" },
+        { text: "Not Verified", value: "Not Verified" }, // đã xóa khoảng trắng thừa
+      ],
+      onFilter: (value, record) =>
+        (record.emailStatus ?? "").toLowerCase().trim() ===
+        value.toLowerCase().trim(),
     },
     {
       title: "Account",
       dataIndex: "account",
       key: "account",
-      sorter: (a, b) => a.account.localeCompare(b.account),
+      filters: [
+        { text: "free", value: "free" },
+        { text: "premium", value: "premium" },
+      ],
+      onFilter: (value, record) => (record.account ?? "") === value,
     },
     {
       title: "Status",
       dataIndex: "status",
-      key: "status  ",
-      sorter: (a, b) => {
-        const statusA = a.status || "";
-        const statusB = b.status || "";
-        return statusA.localeCompare(statusB);
-      },
+      key: "status",
+      filters: [
+        { text: "active", value: "active" },
+        { text: "inactive", value: "inactive" },
+      ],
+      onFilter: (value, record) => (record.status ?? "") === value,
     },
     {
       title: "Action",

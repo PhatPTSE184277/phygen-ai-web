@@ -1,6 +1,7 @@
-import { Form, Input, Button, message, Select, InputNumber } from "antd";
+import { Form, Input, Button, Select, InputNumber } from "antd";
 import api from "../../../../config/axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 const levelEnum = {
   1: "Easy",
   2: "Medium",
@@ -20,7 +21,7 @@ const CreateTopicForm = ({ onCreated }) => {
       setSubject(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách topic");
+      toast.error("Failed to load the list.");
     }
   };
 
@@ -28,12 +29,12 @@ const CreateTopicForm = ({ onCreated }) => {
     try {
       const response = await api.post("topics", values);
       console.log(response?.data?.data);
-      message.success("Topic created successfully");
+      toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
     } catch (error) {
       console.error("Error creating Topic:", error);
-      message.error("Failed to create Subject");
+      toast.error("Oops! There was a problem creating.");
     }
   };
 
@@ -88,7 +89,7 @@ const CreateTopicForm = ({ onCreated }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Create Subject
+          Create Topic
         </Button>
       </Form.Item>
     </Form>

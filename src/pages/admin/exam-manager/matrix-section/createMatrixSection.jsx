@@ -1,6 +1,7 @@
-import { Form, InputNumber, Button, message, Select, Input } from "antd";
+import { Form, InputNumber, Button, Select, Input } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const CreateMatrixSectionForm = ({ onCreated }) => {
   const [form] = Form.useForm();
@@ -16,19 +17,19 @@ const CreateMatrixSectionForm = ({ onCreated }) => {
       setExamMatrix(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách topic");
+      toast.error("Failed to load the list.");
     }
   };
 
   const handleFinish = async (values) => {
     try {
-      const res = await api.post("matrix_sections", values);
-      message.success(res.data.message);
+      await api.post("matrix_sections", values);
+      toast.success("Create successful!");
       form.resetFields();
       onCreated?.();
     } catch (err) {
       console.error(err);
-      message.error("Tạo mới thất bại");
+      toast.error("Oops! There was a problem creating.");
     }
   };
 
@@ -70,7 +71,7 @@ const CreateMatrixSectionForm = ({ onCreated }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Create Exam Matrix Detail
+          Create Exam Matrix Section
         </Button>
       </Form.Item>
     </Form>

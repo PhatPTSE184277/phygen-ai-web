@@ -1,6 +1,7 @@
-import { Form, Input, Button, message, Select, InputNumber } from "antd";
+import { Form, Input, Button, Select, InputNumber } from "antd";
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const levelEnum = {
   1: "Easy",
@@ -42,7 +43,7 @@ const UpdateTopicForm = ({ initialValues, onUpdated }) => {
       setSubject(res.data.data || []);
     } catch (err) {
       console.log(err);
-      message.error("Không thể tải danh sách topic");
+      toast.error("Failed to load the list.");
     }
   };
 
@@ -50,11 +51,11 @@ const UpdateTopicForm = ({ initialValues, onUpdated }) => {
     try {
       await api.put(`topics/${initialValues.id}`, values);
 
-      message.success("Cập nhật môn học thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (err) {
       console.error("Lỗi cập nhật môn học", err);
-      message.error("Cập nhật thất bại");
+      toast.error("Oops! There was a problem updating.");
     }
   };
   return (
@@ -108,7 +109,7 @@ const UpdateTopicForm = ({ initialValues, onUpdated }) => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Update Subject
+          Update Topic
         </Button>
       </Form.Item>
     </Form>

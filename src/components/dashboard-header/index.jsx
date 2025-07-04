@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./index.scss";
-import { useSelector } from "react-redux";
+import api from "../../config/axios";
 
 function DashboardHeader() {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = useSelector((store) => store.user);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUsers] = useState([]);
+  const fetchUser = async () => {
+    try {
+      const response = await api.get("AccountUser/me");
+      console.log(response?.data?.data);
+      setUsers(response?.data?.data);
+    } catch (e) {
+      console.log("Error", e);
+    }
+  };
 
   useEffect(() => {
+    fetchUser();
     const handleScroll = () => {
       if (window.scrollY > 80) {
         setScrolled(true);
@@ -54,12 +64,8 @@ function DashboardHeader() {
               <Link to="/dashboard">Contact</Link>
             </li>
             <div className="nav__items__user">
-              <p>
-                {user
-                  ? `Hello ${user?.data?.account?.username}, 👋🏼`
-                  : "Hello 👋🏼"}
-              </p>
-              <img src={user?.avatar} alt="" />
+              <p>{user ? `Hello ${user?.username}, 👋🏼` : "Hello 👋🏼"}</p>
+              <img src={user?.avatarUrl} alt="" />
             </div>
           </ul>
         </div>

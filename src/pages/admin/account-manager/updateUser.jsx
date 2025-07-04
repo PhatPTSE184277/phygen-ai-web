@@ -1,6 +1,7 @@
-import { Form, Input, Button, message, Select } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import { useEffect } from "react";
 import api from "../../../config/axios";
+import { toast } from "react-toastify";
 
 const UpdateUserForm = ({ initialValues, onUpdated }) => {
   const [form] = Form.useForm();
@@ -30,11 +31,11 @@ const UpdateUserForm = ({ initialValues, onUpdated }) => {
         accountStatus: values.accountStatus,
       });
 
-      message.success("Cập nhật user thành công");
+      toast.success("Update successful!");
       onUpdated?.();
     } catch (error) {
       console.error("Update error", error);
-      message.error("Cập nhật user thất bại");
+      toast.error("Oops! There was a problem updating.");
     }
   };
 

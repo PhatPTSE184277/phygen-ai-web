@@ -1,5 +1,6 @@
-import { Form, Input, Button, message, Select } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import api from "../../../../config/axios";
+import { toast } from "react-toastify";
 
 const gradeEnum = {
   1: "Grade 10",
@@ -14,12 +15,12 @@ const CreateSubjectForm = ({ onCreated }) => {
     try {
       const response = await api.post("subjects", values);
       console.log(response?.data?.data);
-      message.success("Subject created successfully");
+      toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
     } catch (error) {
       console.error("Error creating subject:", error);
-      message.error("Failed to create Subject");
+      toast.error("Oops! There was a problem creating.");
     }
   };
 

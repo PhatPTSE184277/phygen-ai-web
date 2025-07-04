@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FB from "../../img/FBook.png";
 import GG from "../../img/GG.png";
 import "./register.scss";
@@ -11,11 +11,13 @@ import {
   initRegisterHoverEffects,
 } from "./registerAnimation";
 import api from "../../config/axios";
+import { toast } from "react-toastify";
+import { FaCircleNotch } from "react-icons/fa";
 
 function Register() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Refs for animation
   const registerRef = useRef(null);
   const bgRef = useRef(null);
   const itemRef = useRef(null);
@@ -28,11 +30,9 @@ function Register() {
 
     const refs = { bgRef, itemRef, headerRef, formRef, buttonsRef };
 
-    // Initialize animations
     const tl = initRegisterAnimations(refs);
     const cleanupHover = initRegisterHoverEffects(refs);
 
-    // Cleanup function
     return () => {
       tl.kill();
       cleanupHover();
@@ -41,13 +41,22 @@ function Register() {
   }, []);
 
   const handleRegister = async (values) => {
+    setLoading(true);
     try {
       values.role = "User";
       const response = await api.post("Auth/register", values);
-      console.log(response);
-      navigate("/login");
+
+      if (response?.data?.success) {
+        toast.success(response.data.message);
+        navigate("/login");
+      }
     } catch (err) {
-      console.log(err.response?.data);
+      const errorMessage =
+        err.response?.data?.error[0];
+      console.error(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,12 +74,13 @@ function Register() {
               span: 24,
             }}
             onFinish={handleRegister}
+            disabled={loading}
           >
             <Form.Item
               name="email"
               rules={[{ required: true, message: "Please input your Email!" }]}
             >
-              <Input placeholder="Enter Email" />
+              <Input placeholder="Enter Email" disabled={loading} />
             </Form.Item>
 
             <Form.Item
@@ -84,7 +94,7 @@ function Register() {
               ]}
               hasFeedback
             >
-              <Input.Password placeholder="••••••••" />
+              <Input.Password placeholder="••••••••" disabled={loading} />
             </Form.Item>
 
             <Form.Item
@@ -105,13 +115,23 @@ function Register() {
                 }),
               ]}
             >
-              <Input.Password placeholder="••••••••" />
+              <Input.Password placeholder="••••••••" disabled={loading} />
             </Form.Item>
 
             <div className="register__footer">
               <div className="submit">
-                <button className="submit__btn" htmlType="submit">
-                  Register
+                <button
+                  className="submit__btn"
+                  htmlType="submit"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="spinner">
+                      <FaCircleNotch className="spinner-icon" />
+                    </span>
+                  ) : (
+                    "Register"
+                  )}
                 </button>
               </div>
 

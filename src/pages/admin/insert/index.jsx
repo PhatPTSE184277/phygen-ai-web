@@ -61,7 +61,7 @@ const InsertQuestion = () => {
       key: "fileName",
     },
     {
-      title: "Signed URL",
+      title: "",
       dataIndex: "url",
       key: "url",
       render: (text, record) =>

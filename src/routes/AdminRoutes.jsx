@@ -12,6 +12,7 @@ import MatrixSection from "../pages/admin/exam-manager/matrix-section";
 import Topic from "../pages/admin/exam-manager/topic";
 import AdminProfile from "../pages/admin/profile";
 import InsertQuestion from "../pages/admin/insert";
+import { toast } from "react-toastify";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
@@ -19,6 +20,7 @@ const ProtectRouteAuth = ({ children }) => {
   if (user?.data?.account?.role === "admin") {
     return children;
   } else {
+    toast.error("Access denied");
     return <Navigate to="/" />;
   }
 };

@@ -43,7 +43,8 @@ const AdminSidebar = ({ active, onMenuClick }) => {
       label: "Topic",
       path: "/admin/topic",
     },
-    // { icon: I4, label: "AI", path: "/AI" },
+
+    { icon: I4, label: "AI", path: "/admin/questionForAI" },
     { icon: I3, label: "My Profile", path: "/admin/profile" },
   ];
 

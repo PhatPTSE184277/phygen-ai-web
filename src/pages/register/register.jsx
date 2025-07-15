@@ -16,7 +16,11 @@ import { FaCircleNotch } from "react-icons/fa";
 
 function Register() {
   const [loading, setLoading] = useState(false);
+  const [showVerifyInput, setShowVerifyInput] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
+
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
   const registerRef = useRef(null);
   const bgRef = useRef(null);
@@ -29,7 +33,6 @@ function Register() {
     document.body.style.overflow = "hidden";
 
     const refs = { bgRef, itemRef, headerRef, formRef, buttonsRef };
-
     const tl = initRegisterAnimations(refs);
     const cleanupHover = initRegisterHoverEffects(refs);
 
@@ -40,22 +43,50 @@ function Register() {
     };
   }, []);
 
-  const handleRegister = async (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
-    try {
-      values.role = "User";
-      const response = await api.post("Auth/register", values);
+    if (!showVerifyInput) {
+      // First step: Register
+      try {
+        values.role = "User";
+        const response = await api.post("Auth/register", values);
 
-      if (response?.data?.success) {
-        toast.success("Registration successful. Please log in.");
-        navigate("/login");
+        if (response?.data?.success) {
+          toast.success(
+            "Registration successful. Please enter the verification code."
+          );
+          setRegisteredEmail(values.email);
+          setShowVerifyInput(true);
+        }
+      } catch (err) {
+        const errorMessage =
+          err.response?.data?.error?.[0] || "Registration failed";
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.response?.data?.error[0];
-      console.error(errorMessage);
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
+    } else {
+      // Second step: Verify
+      try {
+        const verifyCode = values.verificationCode;
+        const response = await api.post("EmailVerification/verify", {
+          email: registeredEmail,
+          code: verifyCode,
+        });
+
+        if (response?.data?.success) {
+          toast.success("Verification successful! You can now log in.");
+          navigate("/login");
+        } else {
+          toast.error("Invalid verification code.");
+        }
+      } catch (err) {
+        const errorMessage =
+          err.response?.data?.error?.[0] || "Verification failed";
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -69,17 +100,19 @@ function Register() {
       <section className="register__section">
         <div ref={formRef}>
           <Form
-            labelCol={{
-              span: 24,
-            }}
-            onFinish={handleRegister}
+            form={form}
+            labelCol={{ span: 24 }}
+            onFinish={onFinish}
             disabled={loading}
           >
             <Form.Item
               name="email"
               rules={[{ required: true, message: "Please input your Email!" }]}
             >
-              <Input placeholder="Enter Email" disabled={loading} />
+              <Input
+                placeholder="Enter Email"
+                disabled={loading || showVerifyInput}
+              />
             </Form.Item>
 
             <Form.Item
@@ -93,7 +126,10 @@ function Register() {
               ]}
               hasFeedback
             >
-              <Input.Password placeholder="••••••••" disabled={loading} />
+              <Input.Password
+                placeholder="••••••••"
+                disabled={loading || showVerifyInput}
+              />
             </Form.Item>
 
             <Form.Item
@@ -114,20 +150,43 @@ function Register() {
                 }),
               ]}
             >
-              <Input.Password placeholder="••••••••" disabled={loading} />
+              <Input.Password
+                placeholder="••••••••"
+                disabled={loading || showVerifyInput}
+              />
             </Form.Item>
+
+            {/* Only show this input after successful registration */}
+            {showVerifyInput && (
+              <Form.Item
+                name="verificationCode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter the verification code!",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Enter verification code"
+                  disabled={loading}
+                />
+              </Form.Item>
+            )}
 
             <div className="register__footer">
               <div className="submit">
                 <button
                   className="submit__btn"
-                  htmlType="submit"
+                  htmltype="submit"
                   disabled={loading}
                 >
                   {loading ? (
                     <span className="spinner">
                       <FaCircleNotch className="spinner-icon" />
                     </span>
+                  ) : showVerifyInput ? (
+                    "Verify"
                   ) : (
                     "Register"
                   )}
@@ -136,26 +195,22 @@ function Register() {
 
               <div className="register__divider">
                 <div className="border" />
-                <h5 style={{ textAlign: "center" }}>Or continue with</h5>
                 <div className="border" />
               </div>
             </div>
 
-            <div className="register_button" ref={buttonsRef}>
-              <button>
-                <img src={GG} alt="" />
-              </button>
-              <button>
-                <img src={FB} alt="" />
-              </button>
-            </div>
+            {/* Optional: social buttons (commented out) */}
+            {/* <div className="register_button" ref={buttonsRef}>
+              <button><img src={GG} alt="" /></button>
+              <button><img src={FB} alt="" /></button>
+            </div> */}
           </Form>
         </div>
 
         <div className="register__section__header" ref={headerRef}>
           <h1>Register to create exams now.</h1>
           <p>
-            Already have an account yet ? {""}
+            Already have an account?{" "}
             <Link
               to="/login"
               style={{

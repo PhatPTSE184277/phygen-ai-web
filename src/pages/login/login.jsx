@@ -61,9 +61,8 @@ function Login() {
         }
       }
     } catch (err) {
-      console.log(err)
-      const errorMessage =
-        err.response?.data?.error[0];
+      console.log(err);
+      const errorMessage = err.response?.data?.error[0];
       console.error(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -124,7 +123,7 @@ function Login() {
             </Form.Item>
 
             <div className="login__footer">
-              <h5 style={{ textAlign: "end" }}>Recover Password ?</h5>
+              {/* <h5 style={{ textAlign: "end" }}>Recover Password ?</h5> */}
 
               <div className="submit">
                 <button
@@ -142,21 +141,21 @@ function Login() {
                 </button>
               </div>
 
-              <div className="login__divider">
+              {/* <div className="login__divider">
                 <div className="border" />
                 <h5 style={{ textAlign: "center" }}>Or continue with</h5>
                 <div className="border" />
-              </div>
+              </div> */}
             </div>
 
-            <div className="login_button" ref={buttonsRef}>
+            {/* <div className="login_button" ref={buttonsRef}>
               <button>
                 <img src={GG} alt="" />
               </button>
               <button>
                 <img src={FB} alt="" />
               </button>
-            </div>
+            </div> */}
           </Form>
         </div>
       </section>

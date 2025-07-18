@@ -5,46 +5,47 @@ import BarChartComponent from "../../../components/barchart";
 import RatingChart from "../../../components/admin/rating-chart";
 import Rechart from "../../../components/admin/rechart";
 import "./index.scss";
+import PieChartComponent from "../../../components/piechart";
 
 function AdminDashboard() {
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item
-        </a>
-      ),
-    },
-  ];
+  // const items = [
+  //   {
+  //     key: "1",
+  //     label: (
+  //       <a
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         href="https://www.antgroup.com"
+  //       >
+  //         1st menu item
+  //       </a>
+  //     ),
+  //   },
+  //   {
+  //     key: "2",
+  //     label: (
+  //       <a
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         href="https://www.aliyun.com"
+  //       >
+  //         2nd menu item
+  //       </a>
+  //     ),
+  //   },
+  //   {
+  //     key: "3",
+  //     label: (
+  //       <a
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         href="https://www.luohanacademy.com"
+  //       >
+  //         3rd menu item
+  //       </a>
+  //     ),
+  //   },
+  // ];
   return (
     <AdminDashboardComponent>
       <div>
@@ -58,13 +59,10 @@ function AdminDashboard() {
                   marginBottom: "20px",
                 }}
               >
-                <h2>Accounts</h2>
-                <Dropdown menu={{ items }} placement="bottom">
-                  <button>
-                    6 months
-                    <CaretDownOutlined />
-                  </button>
-                </Dropdown>
+                <h2>Exams Created</h2>
+                {/* <Dropdown menu={{ items }} placement="bottom"> */}
+                <button>6 months</button>
+                {/* </Dropdown> */}
               </div>
               <BarChartComponent />
             </div>
@@ -77,15 +75,12 @@ function AdminDashboard() {
                   marginBottom: "0px",
                 }}
               >
-                <h2>Rating</h2>
-                <Dropdown menu={{ items }} placement="bottom">
-                  <button>
-                    6 months
-                    <CaretDownOutlined />
-                  </button>
-                </Dropdown>
+                <h2>User Type</h2>
+                {/* <Dropdown menu={{ items }} placement="bottom"> */}
+                <button>6 months</button>
+                {/* </Dropdown> */}
               </div>
-              <RatingChart />
+              <PieChartComponent />
             </div>
           </div>
           <div className="rechart">
@@ -96,13 +91,10 @@ function AdminDashboard() {
                 margin: "40px 45px",
               }}
             >
-              <h2>Exams</h2>
-              <Dropdown menu={{ items }} placement="bottom">
-                <button>
-                  6 months
-                  <CaretDownOutlined />
-                </button>
-              </Dropdown>
+              <h2>Revenue</h2>
+              {/* <Dropdown menu={{ items }} placement="bottom"> */}
+              <button>6 months</button>
+              {/* </Dropdown> */}
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Rechart />

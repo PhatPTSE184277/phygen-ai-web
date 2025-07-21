@@ -12,18 +12,15 @@ function ReuseTable({
   setPageSize,
   currentPage,
   setCurrentPage,
-  searchTerm,
-  setSearchTerm,
   modalContent,
   onCloseModal,
+  total,
+  onChange,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
+  const showModal = () => setIsModalOpen(true);
+  const handleCancel = () => setIsModalOpen(false);
 
   return (
     <div className="customTable">
@@ -31,24 +28,17 @@ function ReuseTable({
         <button onClick={showModal}>
           <FolderAddOutlined style={{ fontSize: 20 }} />
         </button>
-        <Input
-          placeholder="Enter ID or Name..."
-          prefix={<SearchOutlined />}
-          style={{ width: 300 }}
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setCurrentPage(1); // reset về trang 1 khi search
-          }}
-        />
       </div>
+
       <Table
         columns={columns}
         loading={loading}
         dataSource={data}
+        onChange={onChange}
         pagination={{
-          current: currentPage, // <-- thêm dòng này
+          current: currentPage,
           pageSize: pageSize,
+          total: total,
           showSizeChanger: true,
           pageSizeOptions: ["10", "25", "50"],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total}`,
@@ -62,8 +52,8 @@ function ReuseTable({
       <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
         {modalContent({
           onSuccess: () => {
-            handleCancel(); // đóng modal
-            onCloseModal?.(); // gọi callback cha nếu có
+            handleCancel();
+            onCloseModal?.();
           },
         })}
       </Modal>

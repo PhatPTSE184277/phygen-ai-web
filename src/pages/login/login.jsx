@@ -43,28 +43,22 @@ function Login() {
     setLoading(true);
     try {
       const response = await api.post("Auth/login", values);
-
+      console.log(response?.data?.success);
       if (response?.data?.success) {
-        const { token, account } = response.data.data;
-        const { username, role } = account;
+        const { token, user } = response.data.data;
+        const { role } = user;
 
         localStorage.setItem("token", token);
-        localStorage.setItem("accountId", username);
+        localStorage.setItem("role", role);
 
-        dispatch(login(response.data));
+        dispatch(login({ token, role }));
         toast.success(response.data.message);
 
-        if (role === "user") {
-          navigate("/");
-        } else if (role === "admin") {
-          navigate("/admin/dashboard");
-        }
+        navigate(role === "admin" ? "/admin/dashboard" : "/");
       }
     } catch (err) {
       console.log(err);
-      const errorMessage = err.response?.data?.error[0];
-      console.error(errorMessage);
-      toast.error(errorMessage);
+      toast.error("Cant Login");
     } finally {
       setLoading(false);
     }

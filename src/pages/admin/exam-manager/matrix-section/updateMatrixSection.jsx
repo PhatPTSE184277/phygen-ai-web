@@ -9,11 +9,13 @@ const UpdateMatrixSectionForm = ({ initialValues, onUpdated }) => {
 
   const fetchExamMatrix = async () => {
     try {
-      const res = await api.get("exam_matrixs/active");
-      setExamMatrix(res.data.data || []);
+      const res = await api.get("exam_matrices?Status=active");
+      const items = res.data.data?.items ?? [];
+      setExamMatrix(Array.isArray(items) ? items : []);
     } catch (err) {
       console.log(err);
       toast.error("Failed to load the list.");
+      setExamMatrix([]);
     }
   };
   useEffect(() => {

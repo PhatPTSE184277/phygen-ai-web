@@ -3,60 +3,90 @@ import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import api from "../../../../config/axios";
 import ReuseTable from "../../../../components/admin/table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal, Popconfirm } from "antd";
+import { Modal, Popconfirm, Input, Button } from "antd";
 import CreateMatrixSectionForm from "./createMatrixSection";
 import UpdateMatrixSectionForm from "./updateMatrixSection";
 import { toast } from "react-toastify";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function MatrixSection() {
-  const [matrixDetail, setMatrixDetail] = useState([]);
-  const [loading, setLoading] = useState(false); // State to handle loading status
-  const [pageSize, setPageSize] = useState(20);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [matrixSections, setMatrixSections] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
   const [editingMatrix, setEditingMatrix] = useState(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [queryParams, setQueryParams] = useState({
+    search: searchParams.get("search") || "",
+    sortBy: searchParams.get("sortBy") || "id",
+    desc: searchParams.get("desc") === "true",
+    page: parseInt(searchParams.get("page")) || 1,
+    pageSize: parseInt(searchParams.get("pageSize")) || 20,
+    isDeleted: searchParams.get("isDeleted") || "",
+  });
+
+  const [searchInput, setSearchInput] = useState(queryParams.search);
+
+  const updateURLAndParams = (newParams) => {
+    const updated = { ...queryParams, ...newParams };
+    const urlParams = new URLSearchParams({
+      search: updated.search,
+      sortBy: updated.sortBy,
+      desc: updated.desc,
+      page: updated.page,
+      pageSize: updated.pageSize,
+      isDeleted: updated.isDeleted,
+    });
+    navigate(`?${urlParams.toString()}`);
+    setQueryParams(updated);
+  };
 
   const fetchMatrixSection = async () => {
     setLoading(true);
     try {
-      const response = await api.get("matrix_sections", {
-        params: { search: searchTerm },
+      const res = await api.get("matrix_sections?IsDeleted=false", {
+        params: {
+          Search: queryParams.search,
+          SortBy: queryParams.sortBy,
+          Desc: queryParams.desc,
+          Page: queryParams.page,
+          PageSize: queryParams.pageSize,
+          IsDeleted:
+            queryParams.isDeleted === ""
+              ? undefined
+              : queryParams.isDeleted === "true",
+        },
       });
-      console.log(response?.data?.data);
-      setMatrixDetail(response?.data?.data);
-      setLoading(false);
+
+      const items = res?.data?.data?.items || [];
+      const total = res?.data?.data?.total || 0;
+
+      setMatrixSections(items);
+      setTotal(total);
     } catch (e) {
       console.log("Error", e);
+    } finally {
       setLoading(false);
     }
   };
 
-  const filteredMatrixSection = matrixDetail.filter((s) => {
-    const keyword = searchTerm.toLowerCase();
-    return (
-      s.sectionName?.toLowerCase().includes(keyword) ||
-      s.matrixId?.toString().includes(keyword) ||
-      s.id?.toString().includes(keyword)
-    );
-  });
-
   const onEditClick = async (record) => {
     try {
       const res = await api.get(`matrix_sections/${record.id}`);
-      const data = res?.data?.data;
-      console.log(data);
-      setEditingMatrix(data);
+      setEditingMatrix(res?.data?.data);
       setIsEditModalVisible(true);
     } catch (error) {
-      console.error("Failed to fetch user details:", error);
+      console.error("Failed to fetch details:", error);
       toast.error("Invalid data. Cannot update.");
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await api.patch(`matrix_sections/${id}`);
+      await api.patch(`matrix_sections/${id}`, { isDeleted: true });
       toast.success("Deleted successfully.");
       fetchMatrixSection();
     } catch (error) {
@@ -64,9 +94,10 @@ function MatrixSection() {
       toast.error("Oops! Could not delete the item.");
     }
   };
+
   useEffect(() => {
     fetchMatrixSection();
-  }, [searchTerm]);
+  }, [queryParams]);
 
   const columns = [
     {
@@ -75,20 +106,13 @@ function MatrixSection() {
       key: "id",
       sorter: (a, b) => a.id - b.id,
     },
-
     {
       title: "Section Name",
       dataIndex: "sectionName",
       key: "sectionName",
-      filters: Array.isArray(matrixDetail)
-        ? Array.from(new Set(matrixDetail.map((s) => s.sectionName)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.sectionName === value,
     },
     {
-      title: "ExamMatrix ID",
+      title: "Exam Matrix ID",
       dataIndex: "matrixId",
       key: "matrixId",
       sorter: (a, b) => a.id - b.id,
@@ -97,24 +121,9 @@ function MatrixSection() {
       title: "Display Order",
       dataIndex: "displayOrder",
       key: "displayOrder",
-      sorter: (a, b) => a.id - b.id,
-      filters: Array.isArray(matrixDetail)
-        ? Array.from(new Set(matrixDetail.map((s) => s.displayOrder)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.displayOrder === value,
+      sorter: true,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      filters: [
-        { text: "Active", value: "Active" },
-        { text: "Inactive", value: "Inactive" },
-      ],
-      onFilter: (value, record) => (record.status ?? "") === value,
-    },
+
     {
       title: "Action",
       key: "action",
@@ -125,7 +134,7 @@ function MatrixSection() {
             style={{ color: "#633fea", cursor: "pointer", marginRight: 15 }}
           />
           <Popconfirm
-            title="Are you sure to delete this user?"
+            title="Are you sure to delete this item?"
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
@@ -137,35 +146,60 @@ function MatrixSection() {
     },
   ];
 
-  const data = filteredMatrixSection.map((s) => ({
+  const data = matrixSections.map((s) => ({
     key: s.id,
-    id: s.id,
-    matrixId: s?.matrixId,
-    sectionName: s?.sectionName,
-    displayOrder: s?.displayOrder,
-    status: s?.isDeleted ? "Inactive" : "Active",
+    ...s,
   }));
+
   return (
     <AdminDashboardComponent>
+      <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
+        <Input
+          placeholder="Search by Section Name"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          style={{ width: 300 }}
+          onPressEnter={() =>
+            updateURLAndParams({ search: searchInput, page: 1 })
+          }
+        />
+        <Button
+          onClick={() => updateURLAndParams({ search: searchInput, page: 1 })}
+          type="primary"
+        >
+          Search
+        </Button>
+      </div>
+
       <ReuseTable
         columns={columns}
         data={data}
         loading={loading}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        pageSize={queryParams.pageSize}
+        setPageSize={(size) => updateURLAndParams({ pageSize: size })}
+        currentPage={queryParams.page}
+        setCurrentPage={(page) => updateURLAndParams({ page })}
+        total={total}
+        onChange={(pagination, filters, sorter) => {
+          updateURLAndParams({
+            sortBy: sorter.field || "id",
+            desc: sorter.order === "descend",
+            page: pagination.current,
+            pageSize: pagination.pageSize,
+            isDeleted: filters.isDeleted?.[0] ?? "",
+          });
+        }}
         modalContent={({ onSuccess }) => (
           <CreateMatrixSectionForm
             onCreated={() => {
-              fetchMatrixSection(); // load lại danh sách
-              onSuccess(); // đóng modal
+              fetchMatrixSection();
+              onSuccess();
             }}
           />
         )}
+        onCloseModal={() => fetchMatrixSection()}
       />
+
       <Modal
         open={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}

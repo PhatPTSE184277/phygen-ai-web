@@ -15,9 +15,9 @@ import InsertQuestion from "../pages/admin/insert";
 import { toast } from "react-toastify";
 
 const ProtectRouteAuth = ({ children }) => {
-  const user = useSelector((state) => state.user); // state.user là do bạn đặt tên trong rootReducer
+  const user = useSelector((state) => state.user);
   console.log("User slice:", user);
-  if (user?.data?.account?.role === "admin") {
+  if (user?.role === "admin") {
     return children;
   } else {
     toast.error("Access denied");

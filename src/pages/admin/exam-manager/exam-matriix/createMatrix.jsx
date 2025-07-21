@@ -1,8 +1,9 @@
 import { Form, Input, Button, Select } from "antd";
-// import api nếu bạn dùng axios instance
 import { useEffect, useState } from "react";
 import api from "../../../../config/axios";
 import { toast } from "react-toastify";
+
+const { Option } = Select;
 
 const examTypeEnum = {
   1: "Midterm 1",
@@ -18,9 +19,8 @@ const CreateMatrixForm = ({ onCreated }) => {
   const handleFinish = async (values) => {
     try {
       values.statusEnum = 1;
-      const reponse = await api.post("exam_matrixs", values);
-
-      console.log(reponse?.data?.data);
+      const reponse = await api.post("exam_matrices", values);
+      console.log(reponse);
       toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
@@ -36,12 +36,19 @@ const CreateMatrixForm = ({ onCreated }) => {
 
   const fetchSubjects = async () => {
     try {
-      const res = await api.get("subjects/active");
-      console.log(res?.data?.data);
-      setSubjects(res.data.data || []);
+      const res = await api.get("subjects?IsDeleted=false");
+      const items = res?.data?.data?.items;
+
+      if (Array.isArray(items)) {
+        setSubjects(items);
+      } else {
+        console.error("API response is not an array:", items);
+        setSubjects([]);
+      }
     } catch (error) {
       console.error("Lỗi khi lấy subject:", error);
       toast.error("Failed to load the list.");
+      setSubjects([]);
     }
   };
 

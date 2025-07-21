@@ -13,7 +13,7 @@ const PieChartComponent = () => {
 
   const fetchUserStats = async () => {
     try {
-      const response = await api.get("/DashboardControllerAdmin/user/overview");
+      const response = await api.get("admin/dashboard/user/overview");
       const users = response?.data?.usersByAccountType;
 
       if (users) {

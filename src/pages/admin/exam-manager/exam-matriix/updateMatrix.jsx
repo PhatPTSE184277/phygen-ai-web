@@ -44,20 +44,27 @@ const UpdateMatrixForm = ({ initialValues, onUpdated }) => {
       });
     }
   }, [initialValues, form]);
-
   const fetchSubjects = async () => {
     try {
-      const res = await api.get("subjects/active");
-      setSubjects(res.data?.data || []);
-    } catch (err) {
-      console.error("Lỗi khi lấy subject", err);
+      const res = await api.get("subjects");
+      const items = res?.data?.data?.items;
+
+      if (Array.isArray(items)) {
+        setSubjects(items);
+      } else {
+        console.error("API response is not an array:", items);
+        setSubjects([]);
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy subject:", error);
       toast.error("Failed to load the list.");
+      setSubjects([]);
     }
   };
 
   const handleFinish = async (values) => {
     try {
-      await api.put(`exam_matrixs/${initialValues.id}`, {
+      await api.put(`exam_matrices/${initialValues.id}`, {
         subjectId: values.subjectId,
         examTypeEnum: values.examTypeEnum,
         statusEnum: values.statusEnum,

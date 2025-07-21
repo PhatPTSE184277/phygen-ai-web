@@ -23,24 +23,26 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
     fetchSections();
     fetchTopics();
   }, []);
-
   const fetchSections = async () => {
     try {
-      const res = await api.get("matrix_sections/active");
-      setSections(res.data.data || []);
+      const res = await api.get("matrix_sections?IsDeleted=false");
+      const items = res.data.data?.items ?? [];
+      setSections(Array.isArray(items) ? items : []);
     } catch (err) {
       console.log(err);
       toast.error("Failed to load the list.");
+      setSections([]);
     }
   };
-
   const fetchTopics = async () => {
     try {
-      const res = await api.get("topics/active");
-      setTopics(res.data.data || []);
+      const res = await api.get("topics?IsDeleted=false");
+      const items = res.data.data?.items ?? [];
+      setTopics(Array.isArray(items) ? items : []);
     } catch (err) {
       console.log(err);
       toast.error("Failed to load the list.");
+      setTopics([]);
     }
   };
 
@@ -66,7 +68,7 @@ const CreateMatrixDetailForm = ({ onCreated }) => {
         <Select placeholder="Select a section">
           {sections.map((s) => (
             <Select.Option key={s.id} value={s.id}>
-              {s.name}
+              {s.sectionName}
             </Select.Option>
           ))}
         </Select>

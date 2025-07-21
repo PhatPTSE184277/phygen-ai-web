@@ -7,36 +7,72 @@ import ReuseTable from "../../../../components/admin/table";
 import CreateMatrixForm from "./createMatrix";
 import UpdateMatrixForm from "./updateMatrix";
 import { toast } from "react-toastify";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const ExamMatrix = () => {
   const [matrix, setMatrix] = useState([]);
-  const [loading, setLoading] = useState(false); // State to handle loading status
-  const [pageSize, setPageSize] = useState(20);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [subjects, setSubjects] = useState([]);
   const [editingMatrix, setEditingMatrix] = useState(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [subjects, setSubjects] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const filteredMatrix = matrix.filter((m) => {
-    const keyword = searchTerm.toLowerCase();
-    return (
-      m.createdBy?.toString().includes(keyword) ||
-      m.id?.toString().includes(keyword)
-    );
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [queryParams, setQueryParams] = useState({
+    search: searchParams.get("search") || "",
+    sortBy: searchParams.get("sortBy") || "id",
+    desc: searchParams.get("desc") === "true",
+    page: parseInt(searchParams.get("page")) || 1,
+    pageSize: parseInt(searchParams.get("pageSize")) || 20,
+    subjectId: searchParams.get("subjectId") || "",
+    status: searchParams.get("status") || "",
+    examType: searchParams.get("examType") || "",
   });
+
+  const [searchInput, setSearchInput] = useState(queryParams.search);
+
+  const updateURLAndParams = (newParams) => {
+    const updated = { ...queryParams, ...newParams };
+    const urlParams = new URLSearchParams({
+      search: updated.search,
+      sortBy: updated.sortBy,
+      desc: updated.desc,
+      page: updated.page,
+      pageSize: updated.pageSize,
+      subjectId: updated.subjectId,
+      status: updated.status,
+      examType: updated.examType,
+    });
+    navigate(`?${urlParams.toString()}`);
+    setQueryParams(updated);
+  };
 
   const fetchMatrixs = async () => {
     setLoading(true);
     try {
-      const response = await api.get("exam_matrixs", {
-        params: { search: searchTerm },
+      const res = await api.get("exam_matrices?Status=active", {
+        params: {
+          Search: queryParams.search,
+          SortBy: queryParams.sortBy,
+          Desc: queryParams.desc,
+          Page: queryParams.page,
+          PageSize: queryParams.pageSize,
+          SubjectId: queryParams.subjectId || undefined,
+          Status: queryParams.status || undefined,
+          ExamType: queryParams.examType || undefined,
+        },
       });
-      console.log(response?.data?.data);
-      setMatrix(response?.data?.data);
-      setLoading(false);
-    } catch (e) {
-      console.log("Error", e);
+      const items = res?.data?.data?.items;
+      const total = res?.data?.data?.total;
+      setMatrix(Array.isArray(items) ? items : []);
+      setTotal(typeof total === "number" ? total : 0);
+    } catch (error) {
+      console.error("Failed to fetch matrixs:", error);
+      setMatrix([]);
+      setTotal(0);
+    } finally {
       setLoading(false);
     }
   };
@@ -44,46 +80,39 @@ const ExamMatrix = () => {
   const fetchSubjects = async () => {
     try {
       const res = await api.get("subjects");
-      console.log(res?.data);
-      setSubjects(res?.data?.data);
+      const items = res?.data?.data?.items;
+      setSubjects(items);
     } catch (error) {
-      console.error("Failed to fetch subjects:", error);
+      console.error("Lỗi khi lấy danh sách môn học:", error);
     }
   };
 
   const getSubjectName = (id) => {
-    if (!Array.isArray(subjects)) return "Unknown";
     const subject = subjects.find((s) => s.id === id);
     return subject?.name || "Unknown";
   };
 
   const handleDelete = async (id) => {
     try {
-      await api.patch(`exam_matrixs/${id}`);
+      await api.patch(`exam_matrices/${id}`);
       toast.success("Deleted successfully.");
       fetchMatrixs();
-    } catch (error) {
-      console.error("Delete error:", error);
-      toast.error("Oops! Could not delete the item.");
+    } catch (e) {
+      console.error("Delete error:", e);
+      toast.error("Could not delete the item.");
     }
   };
 
   const onEditClick = async (record) => {
     try {
-      const res = await api.get(`exam_matrixs/${record.id}`);
-      const data = res?.data?.data;
-      console.log(data);
-      setEditingMatrix(data);
+      const res = await api.get(`exam_matrices/${record.id}`);
+      setEditingMatrix(res?.data?.data);
       setIsEditModalVisible(true);
-    } catch (error) {
-      console.error("Failed to fetch user details:", error);
+    } catch (e) {
+      console.log(e);
       toast.error("Invalid data. Cannot update.");
     }
   };
-  useEffect(() => {
-    fetchMatrixs();
-    fetchSubjects();
-  }, [searchTerm]);
 
   const columns = [
     {
@@ -96,53 +125,37 @@ const ExamMatrix = () => {
       title: "Subject Name",
       dataIndex: "subjectName",
       key: "subjectName",
-      filters:
-        Array.isArray(matrix) && Array.isArray(subjects)
-          ? Array.from(
-              new Set(
-                matrix
-                  .map((m) => {
-                    const subject = subjects.find((s) => s.id === m.subjectId);
-                    return subject?.name;
-                  })
-                  .filter(Boolean)
-              )
-            ).map((name) => ({
-              text: name,
-              value: name,
-            }))
-          : [],
-      onFilter: (value, record) => record.subjectName === value,
     },
     {
       title: "Created By",
       dataIndex: "createdBy",
       key: "createdBy",
-      sorter: (a, b) => a.createdBy - b.createdBy,
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Exam type",
       dataIndex: "examtype",
       key: "examtype",
-      filters: Array.from(new Set(matrix.map((item) => item.examtype)))
-        .filter(Boolean)
-        .map((type) => ({
-          text: type,
-          value: type,
-        })),
+      filters: [
+        { text: "Midterm 1", value: "midterm_1" },
+        { text: "Midterm 2", value: "midterm_2" },
+        { text: "End of term 1", value: "end_of_term_1" },
+        { text: "End of term 2", value: "end_of_term_2" },
+      ],
+      filteredValue: queryParams.examType ? [queryParams.examType] : null,
       onFilter: (value, record) => record.examtype === value,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      filters: [
-        { text: "active", value: "active" },
-        { text: "inactive", value: "inactive" },
-      ],
-      onFilter: (value, record) => (record.status ?? "") === value,
+      // filters: [
+      //   { text: "Active", value: "active" },
+      //   { text: "Inactive", value: "inactive" },
+      // ],
+      // filteredValue: queryParams.status ? [queryParams.status] : null,
+      // onFilter: (value, record) => record.status === value,
     },
-
     {
       title: "Action",
       key: "action",
@@ -153,7 +166,7 @@ const ExamMatrix = () => {
             style={{ color: "#633fea", cursor: "pointer", marginRight: 15 }}
           />
           <Popconfirm
-            title="Are you sure to delete this user?"
+            title="Are you sure to delete this item?"
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
@@ -165,38 +178,72 @@ const ExamMatrix = () => {
     },
   ];
 
-  const data = filteredMatrix.map((m, index) => ({
-    key: m.id || index,
-    id: m.id,
-    subjectName: getSubjectName(m.subjectId),
-    createdBy: m.createdBy || "N/A",
-    examtype: m.examtype || "N/A",
-    status: m.status,
-  }));
+  const data = Array.isArray(matrix)
+    ? matrix.map((m, index) => ({
+        key: m.id || index,
+        id: m.id,
+        subjectName: getSubjectName(m.subjectId),
+        createdBy: m.createdBy || "N/A",
+        examtype: m.examtype || "N/A",
+        status: m.status,
+      }))
+    : [];
+
+  useEffect(() => {
+    fetchMatrixs();
+    fetchSubjects();
+  }, [queryParams]);
 
   return (
     <AdminDashboardComponent>
+      <div style={{ marginBottom: 16 }}>
+        <input
+          placeholder="Search..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          style={{ width: 200, marginRight: 8 }}
+        />
+        <button
+          onClick={() => updateURLAndParams({ search: searchInput, page: 1 })}
+        >
+          Search
+        </button>
+      </div>
+
       <ReuseTable
         columns={columns}
         data={data}
         loading={loading}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        pageSize={queryParams.pageSize}
+        setPageSize={(size) => updateURLAndParams({ pageSize: size })}
+        currentPage={queryParams.page}
+        setCurrentPage={(page) => updateURLAndParams({ page })}
+        searchTerm={queryParams.search}
+        // setSearchTerm removed to prevent auto call on typing
         modalContent={({ onSuccess }) => (
           <CreateMatrixForm
             subjects={subjects}
             onCreated={() => {
-              fetchSubjects();
               fetchMatrixs();
+              fetchSubjects();
               onSuccess();
             }}
           />
         )}
+        onCloseModal={() => fetchMatrixs()}
+        total={total}
+        onChange={(pagination, filters, sorter) => {
+          updateURLAndParams({
+            sortBy: sorter.field || "id",
+            desc: sorter.order === "descend",
+            page: pagination.current,
+            pageSize: pagination.pageSize,
+            status: filters.status?.[0] || "",
+            examType: filters.examtype?.[0] || "",
+          });
+        }}
       />
+
       <Modal
         open={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}
@@ -205,8 +252,8 @@ const ExamMatrix = () => {
         <UpdateMatrixForm
           initialValues={editingMatrix}
           onUpdated={() => {
-            fetchSubjects();
             fetchMatrixs();
+            fetchSubjects();
             setIsEditModalVisible(false);
           }}
         />

@@ -29,7 +29,7 @@ const AccountManager = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await api.get("AccountAdmin", {
+      const response = await api.get("account_admins", {
         params: { search: searchTerm },
       });
       console.log(response?.data?.data);
@@ -56,7 +56,7 @@ const AccountManager = () => {
 
   const onEditClick = async (record) => {
     try {
-      const res = await api.get(`AccountAdmin/${record.id}`);
+      const res = await api.get(`account_admins/${record.id}`);
       const data = res?.data?.data;
       console.log(data);
 

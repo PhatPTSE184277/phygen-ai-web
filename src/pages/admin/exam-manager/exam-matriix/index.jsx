@@ -145,17 +145,7 @@ const ExamMatrix = () => {
       filteredValue: queryParams.examType ? [queryParams.examType] : null,
       onFilter: (value, record) => record.examtype === value,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      // filters: [
-      //   { text: "Active", value: "active" },
-      //   { text: "Inactive", value: "inactive" },
-      // ],
-      // filteredValue: queryParams.status ? [queryParams.status] : null,
-      // onFilter: (value, record) => record.status === value,
-    },
+    
     {
       title: "Action",
       key: "action",

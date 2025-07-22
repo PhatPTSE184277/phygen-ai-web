@@ -18,7 +18,7 @@ const InsertQuestion = () => {
   const fetchFileListWithSignedUrls = async () => {
     try {
       setLoading(true);
-      const res = await exApi.get("Supabase/fileName");
+      const res = await exApi.get("Supabase/file-names");
       const fileNames = res?.data?.data || [];
 
       const filtered = fileNames.filter((f) =>
@@ -27,7 +27,7 @@ const InsertQuestion = () => {
 
       const signedUrlPromises = filtered.map(async (fileName) => {
         try {
-          const res = await exApi.get("Supabase/getSignUrl", {
+          const res = await exApi.get("Supabase/files/{fileName}/signed-url", {
             params: { fileName },
           });
           return {

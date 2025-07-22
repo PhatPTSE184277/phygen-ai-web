@@ -12,7 +12,7 @@ function AdminProfile() {
 
   const fetchUser = async () => {
     try {
-      const response = await api.get("AccountUser/me");
+      const response = await api.get("account_users/me");
       console.log(response?.data?.data);
       setUser(response?.data?.data);
     } catch (e) {
@@ -26,7 +26,7 @@ function AdminProfile() {
     formData.append("file", file);
 
     try {
-      const response = await api.put("AccountUser/update-avatar", formData);
+      const response = await api.put("account_users/update-avatar", formData);
       console.log(response.data.data);
       toast.success("Profile updated successfully.");
       fetchUser();
@@ -99,27 +99,27 @@ function AdminProfile() {
         <div className="profile-detail__info">
           <h4>User Name</h4>
           <h5>{user?.username}</h5>
-          <p>Edit</p>
+          {/* <p>Edit</p> */}
         </div>
         <div className="profile-detail__info">
           <h4>Email</h4>
           <h5>{user?.email}</h5>
-          <p>Edit</p>{" "}
+          {/* <p>Edit</p> */}
         </div>
         <div className="profile-detail__info">
           <h4>School</h4>
           <h5>{user?.school}</h5>
-          <p>Edit</p>{" "}
+          {/* <p>Edit</p> */}
         </div>
         <div className="profile-detail__info">
           <h4>Address</h4>
           <h5>{user?.address}</h5>
-          <p>Edit</p>{" "}
+          {/* <p>Edit</p> */}
         </div>
         <div className="profile-detail__info">
           <h4>Password</h4>
           <h5>***************</h5>
-          <p>Edit</p>{" "}
+          {/* <p>Edit</p> */}
         </div>
       </section>
     </AdminDashboardComponent>

@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Select } from "antd";
 import api from "../../../config/axios"; // import api nếu bạn dùng axios instance
 import { toast } from "react-toastify";
 
@@ -8,7 +8,7 @@ const CreateUserForm = ({ onCreated }) => {
   const handleFinish = async (values) => {
     try {
       values.accountType = 1;
-      await api.post("AccountAdmin", values);
+      await api.post("account_admins", values);
       toast.success("Create successful!");
       onCreated?.();
       form.resetFields();
@@ -25,6 +25,13 @@ const CreateUserForm = ({ onCreated }) => {
       </Form.Item>
       <Form.Item name="email" label="Email" rules={[{ type: "email" }]}>
         <Input placeholder="Enter email" />
+      </Form.Item>
+      <Form.Item name="role" label="Role">
+        <Select>
+          <Select.Option value={1}>User</Select.Option>
+          <Select.Option value={2}>Admin</Select.Option>
+          <Select.Option value={3}>Manager</Select.Option>
+        </Select>
       </Form.Item>
       <Form.Item name="password" label="Password" rules={[{ required: true }]}>
         <Input.Password placeholder="Enter password" />

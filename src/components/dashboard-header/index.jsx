@@ -10,7 +10,7 @@ function DashboardHeader() {
   const [user, setUsers] = useState([]);
   const fetchUser = async () => {
     try {
-      const response = await api.get("AccountUser/me");
+      const response = await api.get("account_users/me");
       console.log(response?.data?.data);
       setUsers(response?.data?.data);
     } catch (e) {

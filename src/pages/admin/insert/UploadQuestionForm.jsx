@@ -47,13 +47,17 @@ const UploadQuestionForm = ({ onSuccess }) => {
 
     setLoading(true);
     try {
-      await exApi.post("Supabase/upload_storage", formData);
+      const res = await exApi.post("Supabase/files", formData);
+      console.log(res);
+      
+      const { data: signedData } = await exApi.get(
+        "Supabase/files/{fileName}/signed-url",
+        {
+          params: { fileName: file.name },
+        }
+      );
 
-      const { data: signedData } = await exApi.get("Supabase/getSignUrl", {
-        params: { fileName: file.name },
-      });
-
-      await exApi.post("question/insert", null, {
+      await exApi.post("questions/ai-generations/from-url", null, {
         params: {
           fileUrl: signedData?.data,
         },

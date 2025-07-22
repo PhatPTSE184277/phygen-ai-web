@@ -13,6 +13,7 @@ import Topic from "../pages/admin/exam-manager/topic";
 import AdminProfile from "../pages/admin/profile";
 import InsertQuestion from "../pages/admin/insert";
 import { toast } from "react-toastify";
+import TopicDetail from "../pages/admin/exam-manager/topic/topicDetail";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user);
@@ -73,6 +74,10 @@ const AdminRoutes = [
       {
         path: "questionForAI",
         element: <InsertQuestion />,
+      },
+      {
+        path: "topics/:id/detail",
+        element: <TopicDetail />,
       },
     ],
   },

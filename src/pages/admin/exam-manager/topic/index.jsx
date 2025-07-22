@@ -2,70 +2,108 @@ import React, { useEffect, useState } from "react";
 import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import api from "../../../../config/axios";
 import ReuseTable from "../../../../components/admin/table";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal, Popconfirm } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
+import { Modal, Popconfirm, Input, Button } from "antd";
 import CreateTopicForm from "./createTopic";
 import UpdateTopicForm from "./updateTopic";
 import { toast } from "react-toastify";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Topic() {
   const [topics, setTopics] = useState([]);
-  const [loading, setLoading] = useState(false); // State to handle loading status
-  const [pageSize, setPageSize] = useState(20);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [editingMatrix, setEditingMatrix] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [editingTopic, setEditingTopic] = useState(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
-  const fetchTopic = async () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [queryParams, setQueryParams] = useState({
+    search: searchParams.get("search") || "",
+    sortBy: searchParams.get("sortBy") || "id",
+    desc: searchParams.get("desc") === "true",
+    page: parseInt(searchParams.get("page")) || 1,
+    pageSize: parseInt(searchParams.get("pageSize")) || 20,
+    level: searchParams.get("level") || "",
+    subjectName: searchParams.get("subjectName") || "",
+    isDeleted: searchParams.get("isDeleted") || "",
+  });
+
+  const [searchInput, setSearchInput] = useState(queryParams.search);
+
+  const updateURLAndParams = (newParams) => {
+    const updated = { ...queryParams, ...newParams };
+    const urlParams = new URLSearchParams({
+      search: updated.search,
+      sortBy: updated.sortBy,
+      desc: updated.desc,
+      page: updated.page,
+      pageSize: updated.pageSize,
+      level: updated.level,
+      subjectName: updated.subjectName,
+      isDeleted: updated.isDeleted,
+    });
+    navigate(`?${urlParams.toString()}`);
+    setQueryParams(updated);
+  };
+
+  const fetchTopics = async () => {
     setLoading(true);
     try {
-      const response = await api.get("topics", {
-        params: { search: searchTerm },
+      const res = await api.get("topics?IsDeleted=false", {
+        params: {
+          Search: queryParams.search,
+          SortBy: queryParams.sortBy,
+          Desc: queryParams.desc,
+          Page: queryParams.page,
+          PageSize: queryParams.pageSize,
+          Level: queryParams.level || undefined,
+          SubjectName: queryParams.subjectName || undefined,
+          IsDeleted:
+            queryParams.isDeleted === ""
+              ? undefined
+              : queryParams.isDeleted === "true",
+        },
       });
-      console.log(response?.data?.data);
-      setTopics(response?.data?.data);
-      setLoading(false);
+      setTopics(res?.data?.data?.items || []);
+      setTotal(res?.data?.data?.total || 0);
     } catch (e) {
       console.log("Error", e);
+    } finally {
       setLoading(false);
     }
   };
 
-  const filteredSubjects = topics.filter((s) => {
-    const keyword = searchTerm.toLowerCase();
-    return (
-      s.name?.toLowerCase().includes(keyword) ||
-      s.id?.toString().includes(keyword)
-    );
-  });
-
   const onEditClick = async (record) => {
     try {
       const res = await api.get(`topics/${record.id}`);
-      const data = res?.data?.data;
-      console.log(data);
-      setEditingMatrix(data);
+      setEditingTopic(res?.data?.data);
       setIsEditModalVisible(true);
     } catch (error) {
-      console.error("Failed to fetch user details:", error);
+      console.error("Failed to fetch topic details:", error);
       toast.error("Invalid data. Cannot update.");
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await api.patch(`topics/${id}`);
+      await api.patch(`topics/${id}`, { isDeleted: true });
       toast.success("Deleted successfully.");
-      fetchTopic();
+      fetchTopics();
     } catch (error) {
       console.error("Delete error:", error);
       toast.error("Oops! Could not delete the item.");
     }
   };
+
   useEffect(() => {
-    fetchTopic();
-  }, [searchTerm]);
+    fetchTopics();
+  }, [queryParams]);
 
   const columns = [
     {
@@ -78,31 +116,23 @@ function Topic() {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      onFilter: (value, record) =>
-        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Level",
       dataIndex: "level",
       key: "level",
-      filters: Array.isArray(topics)
-        ? Array.from(new Set(topics.map((s) => s.level)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
+      filters: [
+        { text: "easy", value: "easy" },
+        { text: "medium", value: "medium" },
+        { text: "hard", value: "hard" },
+      ],
+      filteredValue: queryParams.level ? [queryParams.level] : null,
       onFilter: (value, record) => record.level === value,
     },
     {
       title: "Subject Name",
       dataIndex: "subjectName",
       key: "subjectName",
-      filters: Array.isArray(topics)
-        ? Array.from(new Set(topics.map((s) => s.subjectName)))
-            .filter(Boolean)
-            .map((name) => ({ text: name, value: name }))
-        : [],
-      onFilter: (value, record) => record.subjectName === value,
     },
     {
       title: "Parent Id",
@@ -110,28 +140,22 @@ function Topic() {
       key: "parentId",
       sorter: (a, b) => a.parentId - b.parentId,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      filters: [
-        { text: "Active", value: "Active" },
-        { text: "Inactive", value: "Inactive" },
-      ],
-      onFilter: (value, record) => (record.status ?? "") === value,
-    },
 
     {
       title: "Action",
       key: "action",
       render: (record) => (
         <>
+          <InfoCircleOutlined
+            onClick={() => navigate(`/admin/topics/${record.id}/detail`)}
+            style={{ color: "#046142ff", cursor: "pointer", marginRight: 15 }}
+          />
           <EditOutlined
             onClick={() => onEditClick(record)}
             style={{ color: "#633fea", cursor: "pointer", marginRight: 15 }}
           />
           <Popconfirm
-            title="Are you sure to delete this user?"
+            title="Are you sure to delete this topic?"
             onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
@@ -143,45 +167,71 @@ function Topic() {
     },
   ];
 
-  const data = filteredSubjects.map((s) => ({
-    key: s.id,
-    id: s.id,
-    name: s?.name,
-    level: s?.level,
-    subjectName: s?.subjectName,
-    parentId: s?.parentId,
-    status: s?.isDeleted ? "Inactive" : "Active",
+  const data = topics.map((t) => ({
+    key: t.id,
+    ...t,
   }));
+
   return (
     <AdminDashboardComponent>
+      <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
+        <Input
+          placeholder="Search by Topic name or Subject Name..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onPressEnter={() =>
+            updateURLAndParams({ search: searchInput, page: 1 })
+          }
+          style={{ width: 300 }}
+        />
+        <Button
+          type="primary"
+          onClick={() => updateURLAndParams({ search: searchInput, page: 1 })}
+        >
+          Search
+        </Button>
+      </div>
+
       <ReuseTable
         columns={columns}
         data={data}
         loading={loading}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        pageSize={queryParams.pageSize}
+        setPageSize={(size) => updateURLAndParams({ pageSize: size })}
+        currentPage={queryParams.page}
+        setCurrentPage={(page) => updateURLAndParams({ page })}
+        total={total}
+        onChange={(pagination, filters, sorter) => {
+          updateURLAndParams({
+            sortBy: sorter.field || "id",
+            desc: sorter.order === "descend",
+            page: pagination.current,
+            pageSize: pagination.pageSize,
+            level: filters.level?.[0] || "",
+            subjectName: filters.subjectName?.[0] || "",
+            isDeleted: filters.status?.[0] || "",
+          });
+        }}
         modalContent={({ onSuccess }) => (
           <CreateTopicForm
             onCreated={() => {
-              fetchTopic(); // load lại danh sách
-              onSuccess(); // đóng modal
+              fetchTopics();
+              onSuccess();
             }}
           />
         )}
+        onCloseModal={() => fetchTopics()}
       />
+
       <Modal
         open={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}
         footer={null}
       >
         <UpdateTopicForm
-          initialValues={editingMatrix}
+          initialValues={editingTopic}
           onUpdated={() => {
-            fetchTopic();
+            fetchTopics();
             setIsEditModalVisible(false);
           }}
         />

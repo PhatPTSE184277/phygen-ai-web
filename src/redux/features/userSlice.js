@@ -6,6 +6,8 @@ const userSlice = createSlice({
     reducers: {
         login: (state, action) => action.payload,
         logout: () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
             return null;
         },
     }

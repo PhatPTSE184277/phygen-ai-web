@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "antd";
-import AdminDashboardComponent from "../../../components/admin/dashboard";
+import Dashboard from "../../../components/dashboard";
+import { Button, Dropdown, Input, InputNumber, Typography } from "antd";
 import exApi from "../../../config/exApi";
 import { toast } from "react-toastify";
 import ReuseTable from "../../../components/admin/table";
-import UploadQuestionForm from "./UploadQuestionForm";
-
+import UploadQuestionForm from "../../admin/insert/UploadQuestionForm";
 const { Link } = Typography;
-
-const InsertQuestion = () => {
+function InsertManager() {
   const [signedUrls, setSignedUrls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,9 +72,8 @@ const InsertQuestion = () => {
         ),
     },
   ];
-
   return (
-    <AdminDashboardComponent>
+    <Dashboard>
       <ReuseTable
         columns={columns}
         data={signedUrls.map((item, index) => ({ ...item, key: index }))}
@@ -92,8 +89,8 @@ const InsertQuestion = () => {
         )}
         onCloseModal={() => fetchFileListWithSignedUrls()}
       />
-    </AdminDashboardComponent>
+    </Dashboard>
   );
-};
+}
 
-export default InsertQuestion;
+export default InsertManager;

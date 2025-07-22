@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Modal, Popconfirm } from "antd";
+import { Button, Input, Modal, Popconfirm } from "antd";
 import api from "../../../../config/axios";
 import AdminDashboardComponent from "../../../../components/admin/dashboard";
 import ReuseTable from "../../../../components/admin/table";
@@ -145,17 +145,7 @@ const ExamMatrix = () => {
       filteredValue: queryParams.examType ? [queryParams.examType] : null,
       onFilter: (value, record) => record.examtype === value,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      // filters: [
-      //   { text: "Active", value: "active" },
-      //   { text: "Inactive", value: "inactive" },
-      // ],
-      // filteredValue: queryParams.status ? [queryParams.status] : null,
-      // onFilter: (value, record) => record.status === value,
-    },
+
     {
       title: "Action",
       key: "action",
@@ -196,18 +186,22 @@ const ExamMatrix = () => {
 
   return (
     <AdminDashboardComponent>
-      <div style={{ marginBottom: 16 }}>
-        <input
-          placeholder="Search..."
+      <div style={{ display: "flex", gap: 8, marginLeft: "50%" }}>
+        <Input
+          placeholder="Search by Subject Name or Exam type"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          style={{ width: 200, marginRight: 8 }}
+          style={{ width: 300 }}
+          onPressEnter={() =>
+            updateURLAndParams({ search: searchInput, page: 1 })
+          }
         />
-        <button
+        <Button
           onClick={() => updateURLAndParams({ search: searchInput, page: 1 })}
+          type="primary"
         >
           Search
-        </button>
+        </Button>
       </div>
 
       <ReuseTable

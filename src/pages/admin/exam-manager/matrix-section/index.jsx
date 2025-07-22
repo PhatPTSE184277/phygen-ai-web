@@ -153,7 +153,7 @@ function MatrixSection() {
 
   return (
     <AdminDashboardComponent>
-      <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
+      <div style={{ display: "flex", gap: 8,marginLeft: "50%"  }}>
         <Input
           placeholder="Search by Section Name"
           value={searchInput}

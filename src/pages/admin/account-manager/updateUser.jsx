@@ -21,7 +21,7 @@ const UpdateUserForm = ({ initialValues, onUpdated }) => {
 
   const handleFinish = async (values) => {
     try {
-      await api.put(`AccountAdmin/${initialValues.id}`, {
+      await api.put(`account_admins/${initialValues.id}`, {
         username: values.username,
         email: values.email,
         password: initialValues.password,
@@ -78,6 +78,7 @@ const UpdateUserForm = ({ initialValues, onUpdated }) => {
         <Select>
           <Select.Option value={1}>User</Select.Option>
           <Select.Option value={2}>Admin</Select.Option>
+          <Select.Option value={3}>Manager</Select.Option>
         </Select>
       </Form.Item>
 

@@ -20,8 +20,8 @@ const Sidebar = ({ active, onMenuClick }) => {
   ];
 
   const menuItemsBottom = [
-    { icon: I4, label: "Generate", path: "/generate" },
-    { icon: I5, label: "History", path: "/history" },
+    { icon: I4, label: "AI Question", path: "/AIquestion" },
+    { icon: I5, label: "Topic", path: "/topic" },
   ];
 
   return (

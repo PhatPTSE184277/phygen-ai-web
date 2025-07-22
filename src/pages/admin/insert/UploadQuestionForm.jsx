@@ -1,14 +1,35 @@
-// components/admin/UploadQuestionForm.js
-import React, { useState } from "react";
-import { Upload, Button, Form } from "antd";
+import React, { useEffect, useState } from "react";
+import { Upload, Button, Form, Select, Spin } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import exApi from "../../../config/exApi";
 import { toast } from "react-toastify";
+import api from "../../../config/axios";
 
 const UploadQuestionForm = ({ onSuccess }) => {
   const [file, setFile] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [subjectId, setSubjectId] = useState(null);
+  const [subjects, setSubjects] = useState([]);
+  const [loadingSubjects, setLoadingSubjects] = useState(false);
+
+  // Fetch subjects from API
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      setLoadingSubjects(true);
+      try {
+        const res = await api.get("/subjects");
+        setSubjects(res.data.data.items || []);
+      } catch (error) {
+        toast.error("Failed to fetch subjects.");
+        console.error("Subject fetch error:", error);
+      } finally {
+        setLoadingSubjects(false);
+      }
+    };
+
+    fetchSubjects();
+  }, []);
 
   const handleFileChange = (info) => {
     const selectedFile = info.fileList?.[0]?.originFileObj || null;
@@ -41,27 +62,36 @@ const UploadQuestionForm = ({ onSuccess }) => {
       toast.error("Please select a PDF file before submitting.");
       return;
     }
+    if (!subjectId) {
+      toast.error("Please select a subject.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("file", file);
 
     setLoading(true);
     try {
-      await exApi.post("Supabase/upload_storage", formData);
+      const res = await exApi.post("Supabase/files", formData);
+      console.log(res);
+      const { data: signedData } = await exApi.get(
+        "Supabase/files/{fileName}/signed-url",
+        {
+          params: { fileName: file.name },
+        }
+      );
 
-      const { data: signedData } = await exApi.get("Supabase/getSignUrl", {
-        params: { fileName: file.name },
-      });
-
-      await exApi.post("question/insert", null, {
+      await exApi.post("questions/ai-generations/from-url", null, {
         params: {
           fileUrl: signedData?.data,
+          subjectId: subjectId,
         },
       });
 
       toast.success("File uploaded and saved successfully!");
       setFile(null);
       setFileList([]);
+      setSubjectId(null);
       onSuccess?.();
     } catch (error) {
       console.error("Upload error:", error);
@@ -73,6 +103,24 @@ const UploadQuestionForm = ({ onSuccess }) => {
 
   return (
     <Form layout="vertical">
+      <Form.Item label="Select Subject" required>
+        {loadingSubjects ? (
+          <Spin />
+        ) : (
+          <Select
+            placeholder="Choose a subject"
+            value={subjectId}
+            onChange={(value) => setSubjectId(value)}
+          >
+            {subjects.map((subject) => (
+              <Select.Option key={subject.id} value={subject.id}>
+                {subject.name}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+      </Form.Item>
+
       <Form.Item label="Upload a PDF question file">
         <Upload
           beforeUpload={() => false}
@@ -89,11 +137,12 @@ const UploadQuestionForm = ({ onSuccess }) => {
           <Button icon={<UploadOutlined />}>Select PDF File</Button>
         </Upload>
       </Form.Item>
+
       <Button
         type="primary"
         onClick={handleSubmit}
         loading={loading}
-        disabled={!file}
+        disabled={!file || !subjectId}
       >
         Submit
       </Button>

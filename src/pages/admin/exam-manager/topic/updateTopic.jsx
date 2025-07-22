@@ -39,11 +39,13 @@ const UpdateTopicForm = ({ initialValues, onUpdated }) => {
 
   const fetchSubject = async () => {
     try {
-      const res = await api.get("subjects/active");
-      setSubject(res.data.data || []);
+      const res = await api.get("subjects?IsDeleted=false");
+      const items = res.data.data?.items ?? [];
+      setSubject(Array.isArray(items) ? items : []);
     } catch (err) {
       console.log(err);
       toast.error("Failed to load the list.");
+      setSubject([]);
     }
   };
 
@@ -98,7 +100,7 @@ const UpdateTopicForm = ({ initialValues, onUpdated }) => {
       <Form.Item
         name="parentId"
         label="Parent Id"
-        rules={[{ required: true, message: "Please input Parent Id" }]}
+       
       >
         <InputNumber
           min={1}

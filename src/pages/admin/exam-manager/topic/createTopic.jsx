@@ -17,11 +17,13 @@ const CreateTopicForm = ({ onCreated }) => {
 
   const fetchSubject = async () => {
     try {
-      const res = await api.get("subjects/active");
-      setSubject(res.data.data || []);
+      const res = await api.get("subjects?IsDeleted=false");
+      const items = res.data.data?.items ?? [];
+      setSubject(Array.isArray(items) ? items : []);
     } catch (err) {
       console.log(err);
       toast.error("Failed to load the list.");
+      setSubject([]);
     }
   };
 
@@ -75,11 +77,7 @@ const CreateTopicForm = ({ onCreated }) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item
-        name="parentId"
-        label="Parent Id"
-        rules={[{ required: true, message: "Please input Parent Id" }]}
-      >
+      <Form.Item name="parentId" label="Parent Id">
         <InputNumber
           min={1}
           placeholder="Enter quantity"

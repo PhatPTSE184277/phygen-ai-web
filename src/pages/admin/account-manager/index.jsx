@@ -192,10 +192,10 @@ const AccountManager = () => {
       key: "action",
       render: (text, record) => (
         <>
-          <InfoCircleOutlined
+          {/* <InfoCircleOutlined
             onClick={() => onViewDetailClick(record)}
             style={{ color: "#0f8864ff", cursor: "pointer", marginRight: 8 }}
-          />
+          /> */}
 
           <EditOutlined
             onClick={() => onEditClick(record)}
@@ -221,7 +221,7 @@ const AccountManager = () => {
 
   return (
     <AdminDashboardComponent>
-      <div style={{  display: "flex", gap: 8,marginLeft: "50%"  }}>
+      <div style={{ display: "flex", gap: 8, marginLeft: "50%" }}>
         <Input
           placeholder="Search by name/email"
           value={searchInput}
@@ -299,7 +299,7 @@ const AccountManager = () => {
             <p>
               <strong>Username:</strong> {viewingUser.username}
             </p>
-           
+
             <p>
               <strong>Email Verified:</strong>{" "}
               {viewingUser.emailVerified ? "Verified" : "Not Verified"}

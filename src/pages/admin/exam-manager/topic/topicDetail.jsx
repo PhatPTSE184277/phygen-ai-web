@@ -134,7 +134,17 @@ function TopicDetail() {
 
   return (
     <AdminDashboardComponent>
-      <h2 style={{ marginBottom: 16 }}>Questions in Topic #{topicId}</h2>
+      <h2
+        style={{
+          marginBottom: 16,
+          fontFamily: "Poppins, poppin, sans-serif",
+          fontWeight: 400,
+          fontSize: 20,
+          color: "#5932ea",
+        }}
+      >
+        Questions in Topic #{topicId}
+      </h2>
 
       <ReuseTable
         columns={columns}

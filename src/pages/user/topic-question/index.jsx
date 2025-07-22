@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import AdminDashboardComponent from "../../../../components/admin/dashboard";
-import api from "../../../../config/axios";
-import ReuseTable from "../../../../components/admin/table";
 import {
   DeleteOutlined,
   EditOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { Modal, Popconfirm, Input, Button } from "antd";
-import CreateTopicForm from "./createTopic";
-import UpdateTopicForm from "./updateTopic";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import api from "../../../config/axios";
+import Dashboard from "../../../components/dashboard";
+import ReuseTable from "../../../components/admin/table";
+import CreateTopicForm from "../../admin/exam-manager/topic/createTopic";
+import UpdateTopicForm from "../../admin/exam-manager/topic/updateTopic";
 
-function Topic() {
+function TopicManager() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -147,7 +147,7 @@ function Topic() {
       render: (record) => (
         <>
           <InfoCircleOutlined
-            onClick={() => navigate(`/admin/topics/${record.id}/detail`)}
+            onClick={() => navigate(`/topics/${record.id}/detail`)}
             style={{ color: "#046142ff", cursor: "pointer", marginRight: 15 }}
           />
           <EditOutlined
@@ -173,8 +173,10 @@ function Topic() {
   }));
 
   return (
-    <AdminDashboardComponent>
-      <div style={{ display: "flex", gap: 8, marginLeft: "50%" }}>
+    <Dashboard>
+      <div
+        style={{ display: "flex", gap: 8, marginLeft: "50%" }}
+      >
         <Input
           placeholder="Search by Topic name or Subject Name..."
           value={searchInput}
@@ -236,8 +238,8 @@ function Topic() {
           }}
         />
       </Modal>
-    </AdminDashboardComponent>
+    </Dashboard>
   );
 }
 
-export default Topic;
+export default TopicManager;

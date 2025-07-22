@@ -177,7 +177,7 @@ function MatrixDetail() {
 
   return (
     <AdminDashboardComponent>
-      <div style={{ marginBottom: 16, display: "flex", gap: "8px" }}>
+      <div style={{ display: "flex", gap: 8, marginLeft: "50%" }}>
         <Input
           placeholder="Search by Section Name or Topic Name"
           value={searchInput}

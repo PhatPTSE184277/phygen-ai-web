@@ -5,90 +5,63 @@ import { Dropdown } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import "./index.scss";
 import PieChartComponent from "../../../components/piechart";
+import Rechart from "../../../components/admin/rechart";
 
 function UserDashboard() {
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item
-        </a>
-      ),
-    },
-  ];
   return (
     <Dashboard>
-      <div className="user-dashboard">
-        <div className="chart">
-          <div className="bar-chart">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "20px",
-              }}
-            >
-              <h2>Exams</h2>
-              <Dropdown menu={{ items }} placement="bottom">
-                <button>
-                  6 months
-                  <CaretDownOutlined />
-                </button>
-              </Dropdown>
+      <div>
+        <div className="admin-dashboard">
+          <div className="chart">
+            <div className="bar-chart">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "20px",
+                }}
+              >
+                <h2>Exams Created</h2>
+                {/* <Dropdown menu={{ items }} placement="bottom"> */}
+                <button>6 months</button>
+                {/* </Dropdown> */}
+              </div>
+              <BarChartComponent />
             </div>
-            <BarChartComponent />
-          </div>
 
-          <div className="pie-chart">
+            <div className="sebar-chart">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "0px",
+                }}
+              >
+                <h2>User Type</h2>
+                {/* <Dropdown menu={{ items }} placement="bottom"> */}
+                <button>6 months</button>
+                {/* </Dropdown> */}
+              </div>
+              <PieChartComponent />
+            </div>
+          </div>
+          <div className="rechart">
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginBottom: "0px",
+                margin: "40px 45px",
               }}
             >
-              <h2>Grade</h2>
-              <Dropdown menu={{ items }} placement="bottom">
-                <button>
-                  6 months
-                  <CaretDownOutlined />
-                </button>
-              </Dropdown>
+              <h2>Revenue</h2>
+              {/* <Dropdown menu={{ items }} placement="bottom"> */}
+              <button>6 months</button>
+              {/* </Dropdown> */}
             </div>
-            <PieChartComponent />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Rechart />
+            </div>
           </div>
-        </div>
-        <div>
-          <h2>Recent Exam</h2>
         </div>
       </div>
     </Dashboard>

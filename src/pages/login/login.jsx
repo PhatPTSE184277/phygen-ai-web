@@ -42,7 +42,7 @@ function Login() {
   const handleLogin = async (values) => {
     setLoading(true);
     try {
-      const response = await api.post("Auth/login", values);
+      const response = await api.post("auth/login", values);
       console.log(response?.data?.success);
       if (response?.data?.success) {
         const { token, user } = response.data.data;
@@ -53,8 +53,7 @@ function Login() {
 
         dispatch(login({ token, role }));
         toast.success(response.data.message);
-
-        navigate(role === "admin" ? "/admin/dashboard" : "/");
+        navigate(role === "admin" ? "/admin/dashboard" : "/dashboard");
       }
     } catch (err) {
       console.log(err);

@@ -18,6 +18,10 @@ import TopicDetail from "../pages/admin/exam-manager/topic/topicDetail";
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user);
   console.log("User slice:", user);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
   if (user?.role === "admin") {
     return children;
   } else {

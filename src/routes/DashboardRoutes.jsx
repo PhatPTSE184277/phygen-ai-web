@@ -3,17 +3,19 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import UserDashboard from "../pages/user/dashboard";
 import UserProfile from "../pages/user/profile";
 import Membership from "../pages/user/member-ship";
-import Generate from "../pages/user/generate";
-import History from "../pages/user/history";
-import HistoryGenerate from "../pages/user/history-generate";
-import GenerateEdit from "../pages/user/generate-edit";
-import GenerateSumary from "../pages/user/generate-sumary";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import InsertManager from "../pages/user/AI-question";
+import TopicManager from "../pages/user/topic-question";
+import TopicQuestion from "../pages/user/topic-question/question";
 
 const ProtectRouteAuth = ({ children }) => {
   const user = useSelector((state) => state.user);
   console.log("User slice:", user);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
   if (user?.role === "manager") {
     return children;
   } else {
@@ -25,7 +27,11 @@ const ProtectRouteAuth = ({ children }) => {
 const DashboardRoutes = [
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectRouteAuth>
+        <DashboardLayout />
+      </ProtectRouteAuth>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -40,24 +46,16 @@ const DashboardRoutes = [
         element: <Membership />,
       },
       {
-        path: "/generate",
-        element: <Generate />,
+        path: "/AIquestion",
+        element: <InsertManager />,
       },
       {
-        path: "/generate/edit",
-        element: <GenerateEdit />,
+        path: "/topic",
+        element: <TopicManager />,
       },
       {
-        path: "/generate/summary",
-        element: <GenerateSumary />,
-      },
-      {
-        path: "/history",
-        element: <History />,
-      },
-      {
-        path: "/history/generate",
-        element: <HistoryGenerate />,
+        path: "/topics/:id/detail",
+        element: <TopicQuestion />,
       },
     ],
   },

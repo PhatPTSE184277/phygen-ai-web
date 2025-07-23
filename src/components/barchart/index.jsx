@@ -51,6 +51,7 @@ const BarChartComponent = () => {
       const response = await exApi.get(
         `dashboard/exams/monthly-counts?targetYear=${2025}`
       );
+      console.log(response);
       const rawData = response?.data?.data;
 
       // Lấy 6 tháng gần nhất tính từ tháng hiện tại

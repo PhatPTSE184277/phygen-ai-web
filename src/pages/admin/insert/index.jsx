@@ -87,8 +87,10 @@ const InsertQuestion = () => {
         setCurrentPage={setCurrentPage}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        modalContent={({ onSuccess }) => (
-          <UploadQuestionForm onSuccess={fetchFileListWithSignedUrls} />
+        modalContent={({ onSuccess, onCloseModal }) => (
+          <UploadQuestionForm onSuccess={fetchFileListWithSignedUrls}
+            onCloseModal={onCloseModal}
+          />
         )}
         onCloseModal={() => fetchFileListWithSignedUrls()}
       />

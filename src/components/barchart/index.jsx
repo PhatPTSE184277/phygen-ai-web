@@ -47,13 +47,12 @@ const BarChartComponent = () => {
 
   const fetchChartData = async () => {
     try {
-      // 👉 Hoặc new Date().getFullYear()
       const response = await exApi.get(
         `dashboard/exams/monthly-counts?targetYear=${2025}`
       );
       const rawData = response?.data?.data;
 
-      // Lấy 6 tháng gần nhất tính từ tháng hiện tại
+
       const currentMonth = new Date().getMonth() + 1;
       const recentMonths = [];
       for (let i = 5; i >= 0; i--) {
@@ -62,7 +61,6 @@ const BarChartComponent = () => {
         recentMonths.push(month);
       }
 
-      // Format cho Recharts
       const formattedData = recentMonths.map((m) => ({
         name: monthNames[m - 1],
         value: rawData[m] || 0,

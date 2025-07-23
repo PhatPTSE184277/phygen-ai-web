@@ -5,7 +5,7 @@ import exApi from "../../../config/exApi";
 import { toast } from "react-toastify";
 import api from "../../../config/axios";
 
-const UploadQuestionForm = ({ onSuccess }) => {
+const UploadQuestionForm = ({ onSuccess, onCloseModal }) => {
   const [file, setFile] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -93,6 +93,7 @@ const UploadQuestionForm = ({ onSuccess }) => {
       setFileList([]);
       setSubjectId(null);
       onSuccess?.();
+      onCloseModal?.();
     } catch (error) {
       console.error("Upload error:", error);
       toast.error("Failed to upload file.");

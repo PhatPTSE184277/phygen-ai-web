@@ -1,8 +1,5 @@
-import { Dropdown } from "antd";
 import AdminDashboardComponent from "../../../components/admin/dashboard";
-import { CaretDownOutlined } from "@ant-design/icons";
 import BarChartComponent from "../../../components/barchart";
-import RatingChart from "../../../components/admin/rating-chart";
 import Rechart from "../../../components/admin/rechart";
 import "./index.scss";
 import PieChartComponent from "../../../components/piechart";

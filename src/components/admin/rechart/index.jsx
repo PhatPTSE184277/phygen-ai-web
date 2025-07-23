@@ -36,19 +36,12 @@ const Rechart = () => {
       const response = await api.get("admin/dashboard/monthly/revenue");
       const raw = response?.data || {};
 
-      // Convert object to array and sort by month (descending)
-      const sortedEntries = Object.entries(raw).sort(
-        ([a], [b]) => new Date(b) - new Date(a)
-      );
-
-      // Lấy 6 tháng gần nhất rồi đảo ngược để hiển thị từ cũ đến mới
-      const last6Months = sortedEntries.slice(0, 6).reverse();
-
-      const formattedData = last6Months.map(([monthStr, value]) => {
-        const month = monthStr.split("-")[1];
+      // Lấy đủ 12 tháng, nếu thiếu thì giá trị là 0
+      const formattedData = Array.from({ length: 12 }, (_, i) => {
+        const month = String(i + 1).padStart(2, "0");
         return {
-          name: monthMap[month] || monthStr,
-          value,
+          name: monthMap[month] || month,
+          value: raw[month] || 0,
         };
       });
 
